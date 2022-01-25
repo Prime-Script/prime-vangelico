@@ -13,6 +13,7 @@ Thermite Minigame - https://github.com/pushkart2/memorygame
 
 Laptop Minigame - https://github.com/Jesper-Hustad/NoPixel-minigame
 
+
 Installation :
 
 | Drag and drop "Vangelico_Heist.lua" into nui_doorlock / config |
@@ -21,7 +22,8 @@ Installation :
 
 | If you find anything wrong / or make any improvements, then make a PR! |
 
-| LOCALES SYSTEM |
+
+Locales System
 
 English
 

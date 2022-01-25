@@ -12,7 +12,7 @@ local Translations = {
 
         -- Vangelico Fail
         ["security_fail"] = "You Failed To Hack The Security System!",
-        ["camera_fail"] = "You Failed To Disabled The Security!",
+        ["camera_fail"] = "You Failed To Destroy The Security!",
 
         -- Smashing Cases
         ["weak_weapon"] = "This Weapon Isn't Strong Enough",
@@ -30,7 +30,7 @@ local Translations = {
     success = {
         -- Vagelico Success
         ["security_success"] = "You Successfully Hacked The Security System!",
-        ["camera_success"] = "You Successfully Disabled The Security!",
+        ["camera_success"] = "You Successfully Destroyed The Security!",
     },
 }
 

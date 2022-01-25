@@ -54,7 +54,7 @@ If you find problems or better way to optimise the script, feel free to create a
 
 # Locales System
 
-English, Turkish
+English, Turkish, French
 
 Other Languages Coming Soon!
 

@@ -135,7 +135,6 @@ AddEventHandler('hackinglaptop:UseHackinglaptop', function()
                         if Success then
                             SecuritySuccess()
                             SecuritySuccessAnim()
-                            TriggerServerEvent('qb-jewellery:BeginCooldown')
                         else
                             SecurityFailed()
                             SecurityFailedAnim()
@@ -239,10 +238,10 @@ RegisterNetEvent('qb-jewellery:client:SetThermiteSecurityStatus')
 AddEventHandler('qb-jewellery:client:SetThermiteSecurityStatus', function(stateType, state)
     if stateType == "isBusy" then
         Config.JewelLocation["ThermiteSecurity"].isBusy = state
-        print("Thermite is Busy")
+        print("SECURITY IS BUSY")
     elseif stateType == "isDone" then
         Config.JewelLocation["ThermiteSecurity"].isDone = state
-        print("Thermite is Done")
+        print("SECURITY IS DONE")
     end
 end)
 
@@ -251,10 +250,10 @@ RegisterNetEvent('qb-jewellery:client:SetCameraStatus')
 AddEventHandler('qb-jewellery:client:SetCameraStatus', function(stateType, state)
     if stateType == "isBusy" then
         Config.JewelLocation["DisableCameras"].isBusy = state
-        print("Cameras are Busy")
+        print("CAMERAS ARE BUSY")
     elseif stateType == "isDone" then
         Config.JewelLocation["DisableCameras"].isDone = state
-        print("Cameras are Done")
+        print("CAMERAS ARE DONE")
     end
 end)
 
@@ -348,22 +347,6 @@ function CreateFire(coords, time)
     TriggerServerEvent("thermite:StopFires")
 end
 
-function DrawText3D(x, y, z, text)
-    SetTextScale(0.35, 0.35)
-    SetTextFont(4)
-    SetTextProportional(1)
-    SetTextColour(255, 255, 255, 215)
-    SetTextEntry("STRING")
-    SetTextCentre(true)
-    AddTextComponentString(text)
-    SetDrawOrigin(x,y,z, 0)
-    DrawText(0.0, 0.0)
-    local factor = (string.len(text)) / 370
-    DrawRect(0.0, 0.0+0.0125, 0.017+ factor, 0.03, 0, 0, 0, 75)
-    ClearDrawOrigin()
-end
-
-
 -- Creates Animation For Smashing Cases
 function loadAnimDict(dict)
     while (not HasAnimDictLoaded(dict)) do
@@ -444,46 +427,61 @@ function smashVitrine(k)
     end)
 end
 
-------- / Needs Updating
+------- / Done & Finished
 
-RegisterNetEvent('qb-jewellery:client:startbreakinglass')
-AddEventHandler('qb-jewellery:client:startbreakinglass', function()
-        local ped = PlayerPedId()
-        local pos = GetEntityCoords(ped)
-        inRange = false
+RegisterNetEvent('nc-vangelico:client:stealjewellery')
+AddEventHandler('nc-vangelico:client:stealjewellery', function()
+    local ped = PlayerPedId()
+    local pos = GetEntityCoords(ped)
+    inArea = false
 
-        if QBCore ~= nil and isLoggedIn then
-            for case,_ in pairs(Config.Locations) do
-                local dist = #(pos - vector3(Config.Locations[case]["coords"]["x"], Config.Locations[case]["coords"]["y"], Config.Locations[case]["coords"]["z"]))
-                local storeDist = #(pos - vector3(Config.JewelleryLocation["coords"]["x"], Config.JewelleryLocation["coords"]["y"], Config.JewelleryLocation["coords"]["z"]))
-                if dist < 30 then
-                    inRange = true
-                    if dist < 0.6 then
-                        if not Config.Locations[case]["isBusy"] and not Config.Locations[case]["isOpened"] then
-                            QBCore.Functions.TriggerCallback('qb-jewellery:server:getCops', function(cops)
-                                if Config.JewelLocation["DisableCameras"].isDone then
-                                    if validWeapon() then
-                                        smashVitrine(case)
-                                    else
-                                        QBCore.Functions.Notify(Lang:t("error.weak_weapon"), "error", 3500)
-                                        --QBCore.Functions.Notify('This Weapon Isn\'t Strong Enough', 'error')
-                                    end
-                                else
-                                    QBCore.Functions.Notify(Lang:t("error.disable_security"), "error", 3500)
-                                    --QBCore.Functions.Notify("Destroy The Alarm System!", "error")
-                                end               
-                            end) 
+    if QBCore ~= nil and isLoggedIn then
+        for case,_ in pairs(Config.Locations) do
+        local distance = #(pos - vector3(Config.Locations[case]["coords"]["x"], Config.Locations[case]["coords"]["y"], Config.Locations[case]["coords"]["z"]))
+        local saveDistance = #(pos - vector3(Config.JewelleryLocation["coords"]["x"], Config.JewelleryLocation["coords"]["y"], Config.JewelleryLocation["coords"]["z"]))
+        if Config.JewelLocation["DisableCameras"].isDone then
+            if distance < 30 then
+                inArea = true
+                if distance < 0.6 then
+                    if not Config.Locations[case]["isBusy"] and not Config.Locations[case]["isOpened"] then
+                        if validWeapon() then
+                            smashVitrine(case)
+                        else
+                            QBCore.Functions.Notify(Lang:t("error.weak_weapon"), "error", 3500)
+                            --QBCore.Functions.Notify('This Weapon Isn\'t Strong Enough', 'error')
                         end
+                    else
+                        QBCore.Functions.Notify(Lang:t("error.smashed_already"), "error", 3500)
+                        --QBCore.Functions.Notify("This Case Has Already Been Smashed!", "error")
                     end
                 end
+            else
+                QBCore.Functions.Notify(Lang:t("error.distance_check"), "error", 3500)
+                --QBCore.Functions.Notify("You Are Not Close Enough To The Case!", "error")
             end
+        else
+            QBCore.Functions.Notify(Lang:t("error.disable_security"), "error", 3500)
+            --QBCore.Functions.Notify("Destroy The Alarm System!", "error")
         end
+    end
+    if not inArea then
+        Citizen.Wait(2000)
+    end
+    Citizen.Wait(3)
+end
 
-        if not inRange then
-            Citizen.Wait(2000)
-        end
+end)
 
-        Citizen.Wait(3)
+------ / Event for police to reboot alarm system!
+
+RegisterNetEvent('nc-vangelico:client:rebootsystem')
+AddEventHandler('nc-vangelico:client:rebootsystem', function()
+    if job == "police" then
+        TriggerServerEvent('nui_doorlock:server:updateState', "doubledoor", true, false, false, true)
+    else
+        QBCore.Functions.Notify(Lang:t("error.system_reboot"), "error", 3500)
+        --QBCore.Functions.Notify("You Can Not Reboot The System!", "error")
+    end
 end)
 
 ------ / Events / Done & Finished
@@ -507,7 +505,7 @@ CreateThread(function()
             {
                 type = "client",
                 event = "thermite:UseThermite",
-                icon = 'fas fa-gem',
+                icon = 'fas fa-bomb',
                 label = 'Place Thermite',
             }
         },
@@ -530,8 +528,15 @@ CreateThread(function()
             {
                 type = "client",
                 event = "hackinglaptop:UseHackinglaptop",
-                icon = 'fas fa-video',
+                icon = 'fas fa-usb',
                 label = 'Connect USB',
+            },
+            {
+                type = "client",
+                event = "nc-vangelico:client:rebootsystem",
+                icon = 'fas fa-power-off',
+                label = 'Reboot Security System',
+                job = { ["police"] = 0 }
             }
         },
         distance = 3.0,
@@ -550,7 +555,7 @@ CreateThread(function()
         options = {
             {
                 type = "client",
-                event = "qb-jewellery:client:startbreakinglass",
+                event = "nc-vangelico:client:stealjewellery",
                 icon = "fas fa-gem",
                 label = "Smash Case!",
             }

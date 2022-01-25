@@ -25,7 +25,11 @@ local Translations = {
         ["pockets_full"] = "You Can't Carry Anymore...",
 
         -- This will display if user changes the Dispatch System
-        ["dispatch_system"] = "This Dispatch System Isn't Added Yet!"
+        ["dispatch_system"] = "This Dispatch System Isn't Added Yet!",
+
+        -- Smash The Case System
+        ["smashed_already"] = "This Case Has Already Been Smashed!",
+        ["distance_check"] = "You Are Not Close Enough To The Case!",
     },
     success = {
         -- Vagelico Success

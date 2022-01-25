@@ -21,9 +21,10 @@ local Translations = {
         -- Leaving Fingerprints Behind!
         ["fingerprints_left"] = "You've Left Fingerprints On The Glass",
 
-        -- 
+        -- Prevent Player For Filling Pockets Full
         ["pockets_full"] = "You Can't Carry Anymore!",
 
+        -- This will display if user changes the Dispatch System
         ["dispatch_system"] = "This Dispatch System Isn't Added Yet!"
     },
     success = {

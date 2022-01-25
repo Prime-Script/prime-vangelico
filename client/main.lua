@@ -5,69 +5,160 @@ local requiredItems = {}
 local isLoggedIn = true
 PlayerJob = {}
 
--- Location For Laptop Aninmation
-local hackCoord = {x = -595.43,  y = -283.65,  z = 50.60, h = 150}
-
--- Hacking The Security System
-RegisterNetEvent('hackinglaptop:UseHackinglaptop')
-AddEventHandler('hackinglaptop:UseHackinglaptop', function()
+-- Thermite The Security System On Top Of The Roof
+RegisterNetEvent('thermite:UseThermite')
+AddEventHandler('thermite:UseThermite', function()
     if QBCore ~= nil and isLoggedIn then
         local pos = GetEntityCoords(PlayerPedId())
-        if #(pos - vector3(Config.JewelLocation["HackSecurity"].x, Config.JewelLocation["HackSecurity"].y,Config.JewelLocation["HackSecurity"].z)) < 1.0 then
+        if #(pos - vector3(Config.JewelLocation["ThermiteSecurity"].x, Config.JewelLocation["ThermiteSecurity"].y,Config.JewelLocation["ThermiteSecurity"].z)) < 1.0 then
             if CurrentCops >= Config.RequiredCops then
                 QBCore.Functions.TriggerCallback("qb-jewellery:Callback:Cooldown",function(isCooldown)
                     if not isCooldown then
-                        local pos = GetEntityCoords(PlayerPedId())
-                        if math.random(1, 100) <= 80 and not IsWearingHandshoes() then
-                        TriggerServerEvent("evidence:server:CreateFingerDrop", pos)
-                        end
                         QBCore.Functions.TriggerCallback('QBCore:HasItem', function(hasItem)
                             if hasItem then
-                            TriggerEvent('inventory:client:requiredItems', requiredItems, false)
-                            TriggerServerEvent("qb-jewellery:server:SetHackSecurityStatus", "isBusy", true)
-                            QBCore.Functions.Progressbar("power_hack", "Hacking Security", math.random(4500, 4600), false, true, {
-                                   useWhileDead = false,
-                                   canCancel = false,
-                                   controlDisables = {
-                                   disableMovement = true,
-                                   disableCarMovement = false,
-                                   disableMouse = false,
-                                   disableCombat = false,
-                                },
-                            })
-                            SecurityAnimation()
-                            Wait(2000)
-                            exports['hacking']:OpenHackingGame(Config.VangelicoTime, Config.VangelicoBlocks, Config.VangelicoRepeat, function(Success)
-                                if Success then
-                                    SecuritySuccess()
-                                    SecuritySuccessAnim()
+                                TriggerEvent('inventory:client:requiredItems', requiredItems, false)
+                                TriggerServerEvent("qb-jewellery:server:SetHackSecurityStatus", "isBusy", true)
+                                exports["memorygame"]:thermiteminigame(Config.CorrectBlocks, Config.IncorrectBlocks, Config.TimeToShow, Config.TimeToLose,
+                                function() -- Successfully Disable Cameras
+                                    ThermiteAnimation() 
+                                    ThermiteSuccess()
                                     TriggerServerEvent('nui_doorlock:server:updateState', "doubledoor",  false, false, false, true)
                                     TriggerServerEvent('qb-jewellery:BeginCooldown')
-                                else
-                                    SecurityFailed()
-                                    SecurityFailedAnim()
-                                end
-                            end)                        
-                        else
-                            QBCore.Functions.Notify(Lang:t("error.wrong_equipment"), "error", 3500)
-                            --QBCore.Functions.Notify("You Don\'t Have The Correct Equipment!", "error")   
-                        end
-                    end, "usb_green")
-                else
-                    QBCore.Functions.Notify(Lang:t("error.cooldown"), "error", 3500)
-                    --QBCore.Functions.Notify("This Has Just Been Hit, You'll Have To Wait!", "error")
-                end      
-            end)
-        else
-            QBCore.Functions.Notify(Lang:t("error.required_police"), "error", 3500)
-            --QBCore.Functions.Notify('Not Enough Police ('.. Config.RequiredCops ..') Required!', 'error')
-        end 
-    end   
-else
-    Citizen.Wait(3000)
+                                end,
+                                function() -- Fail To Disable Cameras
+                                    ThermiteFail()
+                                end)                        
+                            else
+                                QBCore.Functions.Notify(Lang:t("error.wrong_equipment"), "error", 3500)
+                                --QBCore.Functions.Notify("You Don\'t Have The Correct Equipment!", "error")   
+                            end
+                        end, "thermite")
+                    else
+                        QBCore.Functions.Notify(Lang:t("error.cooldown"), "error", 3500)
+                        --QBCore.Functions.Notify("This Has Just Been Hit, You'll Have To Wait!", "error")
+                    end      
+                end)
+            else
+                QBCore.Functions.Notify(Lang:t("error.required_police"), "error", 3500)
+                --QBCore.Functions.Notify('Not Enough Police ('.. Config.RequiredCops ..') Required!', 'error')
+            end 
+        end   
+    else
+        Citizen.Wait(3000)
+    end
+end)
+
+-- Effect for Thermite
+RegisterNetEvent("Peely-ptfxparticle")
+AddEventHandler("Peely-ptfxparticle", function(method)
+    local ptfx
+
+    RequestNamedPtfxAsset("scr_ornate_heist")
+    while not HasNamedPtfxAssetLoaded("scr_ornate_heist") do
+        Citizen.Wait(1)
+    end
+        ptfx = vector3(-596.05, -282.71, 50.25)
+    SetPtfxAssetNextCall("scr_ornate_heist")
+    local effect = StartParticleFxLoopedAtCoord("scr_heist_ornate_thermal_burn", ptfx, 0.0, 0.0, 0.0, 1.0, false, false, false, false)
+    Citizen.Wait(5000)
+    StopParticleFxLooped(effect, 0)
+end)
+
+-- Thermite Animations
+function ThermiteAnimation() 
+    RequestAnimDict("anim@heists@ornate_bank@thermal_charge")
+    RequestModel("hei_p_m_bag_var22_arm_s")
+    RequestNamedPtfxAsset("scr_ornate_heist")
+    while not HasAnimDictLoaded("anim@heists@ornate_bank@thermal_charge") and not HasModelLoaded("hei_p_m_bag_var22_arm_s") and not HasNamedPtfxAssetLoaded("scr_ornate_heist") do
+        Citizen.Wait(50)
+    end
+    local ped = PlayerPedId()
+    SetEntityHeading(ped, 297)
+    Citizen.Wait(100)
+
+    local rotx, roty, rotz = table.unpack(vec3(GetEntityRotation(PlayerPedId())))
+    local bagscene = NetworkCreateSynchronisedScene(-596.04, -283.71, 50.32, rotx, roty, rotz + 297, 2, false, false, 1065353216, 0, 1.3)
+    local bag = CreateObject(GetHashKey("hei_p_m_bag_var22_arm_s"), -596.09, -283.75, 50.32,  true,  true, false)
+
+    SetEntityCollision(bag, false, true)
+    NetworkAddPedToSynchronisedScene(ped, bagscene, "anim@heists@ornate_bank@thermal_charge", "thermal_charge", 1.2, -4.0, 1, 16, 1148846080, 0)
+    NetworkAddEntityToSynchronisedScene(bag, bagscene, "anim@heists@ornate_bank@thermal_charge", "bag_thermal_charge", 4.0, -8.0, 1)
+    SetPedComponentVariation(ped, 5, 0, 0, 0)
+    NetworkStartSynchronisedScene(bagscene)
+    Citizen.Wait(1500)
+    local x, y, z = table.unpack(GetEntityCoords(ped))
+    local bomba = CreateObject(GetHashKey("hei_prop_heist_thermite"), x, y, z + 0.3,  true,  true, true)
+
+    SetEntityCollision(bomba, false, true)
+    AttachEntityToEntity(bomba, ped, GetPedBoneIndex(ped, 28422), 0, 0, 0, 0, 0, 200.0, true, true, false, true, 1, true)
+    Citizen.Wait(2000)
+    DeleteObject(bag)
+    SetPedComponentVariation(ped, 5, 45, 0, 0)
+    DetachEntity(bomba, 1, 1)
+    FreezeEntityPosition(bomba, true)
+    TriggerServerEvent("Peely-particleserver", method)
+    SetPtfxAssetNextCall("scr_ornate_heist")
+    local effect = StartParticleFxLoopedAtCoord("scr_heist_ornate_thermal_burn", ptfx, 0.0, 0.0, 0.0, 1.0, false, false, false, false)
+
+    NetworkStopSynchronisedScene(bagscene)
+    TaskPlayAnim(ped, "anim@heists@ornate_bank@thermal_charge", "cover_eyes_intro", 8.0, 8.0, 1000, 36, 1, 0, 0, 0)
+    TaskPlayAnim(ped, "anim@heists@ornate_bank@thermal_charge", "cover_eyes_loop", 8.0, 8.0, 3000, 49, 1, 0, 0, 0)
+    Citizen.Wait(5000)
+    ClearPedTasks(ped)
+    DeleteObject(bomba)
+    StopParticleFxLooped(effect, 0)
 end
 
+-- Disable the Security System
+RegisterNetEvent('hackinglaptop:UseHackinglaptop')
+AddEventHandler('hackinglaptop:UseHackinglaptop', function()
+    local pos = GetEntityCoords(PlayerPedId())
+    if #(pos - vector3(Config.JewelLocation["DisableCameras"].x, Config.JewelLocation["DisableCameras"].y,Config.JewelLocation["DisableCameras"].z)) < 1.5 then
+        QBCore.Functions.TriggerCallback('QBCore:HasItem', function(hasItem)
+            if Config.JewelLocation["ThermiteSecurity"].isDone then
+                if hasItem then
+                    TriggerEvent('inventory:client:requiredItems', requiredItems, false)
+                    TriggerServerEvent("qb-jewellery:server:SetThermiteSecurityStatus", "isBusy", true)
+                    QBCore.Functions.Progressbar("power_hack", "Connecting...", math.random(5500, 5600), false, true, {
+                           useWhileDead = false,
+                           canCancel = false,
+                           controlDisables = {
+                           disableMovement = true,
+                           disableCarMovement = false,
+                           disableMouse = false,
+                           disableCombat = false,
+                        },
+                    })
+                    SecurityAnimation()
+                    Wait(2000)
+                    exports['hacking']:OpenHackingGame(Config.VangelicoTime, Config.VangelicoBlocks, Config.VangelicoRepeat, function(Success)
+                        if Success then
+                            SecuritySuccess()
+                            SecuritySuccessAnim()
+                            TriggerServerEvent('qb-jewellery:BeginCooldown')
+                        else
+                            SecurityFailed()
+                            SecurityFailedAnim()
+                        end
+                    end)                        
+                else
+                    QBCore.Functions.Notify(Lang:t("error.wrong_equipment"), "error", 3500)
+                    --QBCore.Functions.Notify("You Don\'t Have The Correct Equipment!", "error")   
+                end
+
+            else
+                QBCore.Functions.Notify(Lang:t("error.cooldown_disable"), "error", 3500)
+                --QBCore.Functions.Notify("You Haven't Hacked The Security System Yet!", "error")
+            end
+            
+        end, "usb_green")
+        
+    end
+
 end)
+
+-- Location For Laptop Aninmation
+local hackCoord = {x = -629.60, y = -230.05, z = 38.45, h = 36.8}
 
 -- Hack Into Security System!
 function SecurityAnimation()
@@ -84,7 +175,7 @@ function SecurityAnimation()
     end
     local ped = PlayerPedId()
     local targetPosition, targetRotation = (vec3(GetEntityCoords(ped))), vec3(GetEntityRotation(ped))
-    local cardLoc = vector4(-595.43, -283.65, 50.60, 150)
+    local cardLoc = vector4(-629.60, -230.05, 38.60, 36.8)
 
     SetEntityHeading(ped, hackCoord.h)
     local animPos = GetAnimInitialOffsetPosition(animDict, "hack_enter", hackCoord.x, hackCoord.y, hackCoord.z+0.80, hackCoord.x, hackCoord.y, hackCoord.z+0.85, 0, 2)
@@ -120,103 +211,6 @@ function SecurityAnimation()
     NetworkStartSynchronisedScene(netScene2)
 end
 
-RegisterNetEvent('thermite:UseThermite')
-AddEventHandler('thermite:UseThermite', function()
-    local pos = GetEntityCoords(PlayerPedId())
-    if #(pos - vector3(Config.JewelLocation["DisableCameras"].x, Config.JewelLocation["DisableCameras"].y,Config.JewelLocation["DisableCameras"].z)) < 1.5 then
-        QBCore.Functions.TriggerCallback('QBCore:HasItem', function(hasItem)
-            if Config.JewelLocation["HackSecurity"].isDone then
-                if hasItem then
-                    TriggerEvent('inventory:client:requiredItems', requiredItems, false)
-                    TriggerServerEvent("qb-jewellery:server:SetCameraStatus", "isBusy", true)
-                    exports["memorygame"]:thermiteminigame(Config.CorrectBlocks, Config.IncorrectBlocks, Config.TimeToShow, Config.TimeToLose,
-                    function() -- Successfully Disable Cameras
-                        CamerasAnimation() 
-                        CamerasSucess()
-                        TriggerServerEvent('nui_doorlock:server:updateState', "doubledoor",  false, false, false, true)
-                     end,
-                     function() -- Fail To Disable Cameras
-                        CamerasFailed()
-                     
-                    end) 
-                
-                else
-                    QBCore.Functions.Notify(Lang:t("error.wrong_equipment"), "error", 3500)
-                    --QBCore.Functions.Notify("You Don\'t Have The Correct Equipment!", "error")
-                end
-
-            else
-                QBCore.Functions.Notify(Lang:t("error.cooldown_disable"), "error", 3500)
-                --QBCore.Functions.Notify("You Haven't Hacked The Security System Yet!", "error")
-            end
-            
-        end, "thermite")
-        
-    end
-
-end)
-
--- Effect for Thermite
-RegisterNetEvent("Peely-ptfxparticle")
-AddEventHandler("Peely-ptfxparticle", function(method)
-    local ptfx
-
-    RequestNamedPtfxAsset("scr_ornate_heist")
-    while not HasNamedPtfxAssetLoaded("scr_ornate_heist") do
-        Citizen.Wait(1)
-    end
-        ptfx = vector3(-632.07, -233.88, 38.00)
-    SetPtfxAssetNextCall("scr_ornate_heist")
-    local effect = StartParticleFxLoopedAtCoord("scr_heist_ornate_thermal_burn", ptfx, 0.0, 0.0, 0.0, 1.0, false, false, false, false)
-    Citizen.Wait(5000)
-    StopParticleFxLooped(effect, 0)
-end)
-
--- 1st Thermite Animation
-function CamerasAnimation() 
-    RequestAnimDict("anim@heists@ornate_bank@thermal_charge")
-    RequestModel("hei_p_m_bag_var22_arm_s")
-    RequestNamedPtfxAsset("scr_ornate_heist")
-    while not HasAnimDictLoaded("anim@heists@ornate_bank@thermal_charge") and not HasModelLoaded("hei_p_m_bag_var22_arm_s") and not HasNamedPtfxAssetLoaded("scr_ornate_heist") do
-        Citizen.Wait(50)
-    end
-    local ped = PlayerPedId()
-    SetEntityHeading(ped, 125)
-    Citizen.Wait(100)
-
-    local rotx, roty, rotz = table.unpack(vec3(GetEntityRotation(PlayerPedId())))
-    local bagscene = NetworkCreateSynchronisedScene(-632.11, -234.92, 38.07, rotx, roty, rotz + 125, 2, false, false, 1065353216, 0, 1.3)
-    local bag = CreateObject(GetHashKey("hei_p_m_bag_var22_arm_s"), -632.11, -234.92, 38.07,  true,  true, false)
-
-    SetEntityCollision(bag, false, true)
-    NetworkAddPedToSynchronisedScene(ped, bagscene, "anim@heists@ornate_bank@thermal_charge", "thermal_charge", 1.2, -4.0, 1, 16, 1148846080, 0)
-    NetworkAddEntityToSynchronisedScene(bag, bagscene, "anim@heists@ornate_bank@thermal_charge", "bag_thermal_charge", 4.0, -8.0, 1)
-    SetPedComponentVariation(ped, 5, 0, 0, 0)
-    NetworkStartSynchronisedScene(bagscene)
-    Citizen.Wait(1500)
-    local x, y, z = table.unpack(GetEntityCoords(ped))
-    local bomba = CreateObject(GetHashKey("hei_prop_heist_thermite"), x, y, z + 0.3,  true,  true, true)
-
-    SetEntityCollision(bomba, false, true)
-    AttachEntityToEntity(bomba, ped, GetPedBoneIndex(ped, 28422), 0, 0, 0, 0, 0, 200.0, true, true, false, true, 1, true)
-    Citizen.Wait(2000)
-    DeleteObject(bag)
-    SetPedComponentVariation(ped, 5, 45, 0, 0)
-    DetachEntity(bomba, 1, 1)
-    FreezeEntityPosition(bomba, true)
-    TriggerServerEvent("Peely-particleserver", method)
-    SetPtfxAssetNextCall("scr_ornate_heist")
-    local effect = StartParticleFxLoopedAtCoord("scr_heist_ornate_thermal_burn", ptfx, 0.0, 0.0, 0.0, 1.0, false, false, false, false)
-
-    NetworkStopSynchronisedScene(bagscene)
-    TaskPlayAnim(ped, "anim@heists@ornate_bank@thermal_charge", "cover_eyes_intro", 8.0, 8.0, 1000, 36, 1, 0, 0, 0)
-    TaskPlayAnim(ped, "anim@heists@ornate_bank@thermal_charge", "cover_eyes_loop", 8.0, 8.0, 3000, 49, 1, 0, 0, 0)
-    Citizen.Wait(5000)
-    ClearPedTasks(ped)
-    DeleteObject(bomba)
-    StopParticleFxLooped(effect, 0)
-end
-
 ------- / Trigger Status
 
 RegisterNetEvent('police:SetCopCount')
@@ -241,14 +235,14 @@ AddEventHandler('qb-jewellery:client:ConfigLocs', function(list)
 end)
 
 -- Hacking Security System!
-RegisterNetEvent('qb-jewellery:client:SetHackSecurityStatus')
-AddEventHandler('qb-jewellery:client:SetHackSecurityStatus', function(stateType, state)
+RegisterNetEvent('qb-jewellery:client:SetThermiteSecurityStatus')
+AddEventHandler('qb-jewellery:client:SetThermiteSecurityStatus', function(stateType, state)
     if stateType == "isBusy" then
-        Config.JewelLocation["HackSecurity"].isBusy = state
-        print("Hack is Busy")
+        Config.JewelLocation["ThermiteSecurity"].isBusy = state
+        print("Thermite is Busy")
     elseif stateType == "isDone" then
-        Config.JewelLocation["HackSecurity"].isDone = state
-        print("Hack is Done")
+        Config.JewelLocation["ThermiteSecurity"].isDone = state
+        print("Thermite is Done")
     end
 end)
 
@@ -257,8 +251,10 @@ RegisterNetEvent('qb-jewellery:client:SetCameraStatus')
 AddEventHandler('qb-jewellery:client:SetCameraStatus', function(stateType, state)
     if stateType == "isBusy" then
         Config.JewelLocation["DisableCameras"].isBusy = state
+        print("Cameras are Busy")
     elseif stateType == "isDone" then
         Config.JewelLocation["DisableCameras"].isDone = state
+        print("Cameras are Done")
     end
 end)
 
@@ -284,29 +280,29 @@ function SecurityFailedAnim()
 end
 
 -- Hack Security Fail
-function SecurityFailed()
+function ThermiteFailed()
     QBCore.Functions.Notify(Lang:t("error.security_fail"), "error", 3500)
     --QBCore.Functions.Notify("You Failed To Hack The Security System!", "error")
     TriggerServerEvent('qb-jewellery:server:policeAlert')
     PlaySound(-1, "Place_Prop_Fail", "DLC_Dmod_Prop_Editor_Sounds", 0, 0, 1)
-    TriggerServerEvent("qb-jewellery:server:SetHackSecurityStatus", "isBusy", false)    
+    TriggerServerEvent("qb-jewellery:server:SetThermiteSecurityStatus", "isBusy", false)    
 end
 
 -- Hack Security Successfully
-function SecuritySuccess()
-    QBCore.Functions.Notify(Lang:t("error.security_success"), "success", 3500)
+function ThermiteSuccess()
+    QBCore.Functions.Notify(Lang:t("success.security_success"), "success", 3500)
     --QBCore.Functions.Notify("You Successfully Hacked The Security System!", "success")
     TriggerServerEvent('qb-jewellery:Server:BeginCooldown')
-    TriggerServerEvent("QBCore:Server:RemoveItem", "usb_green", 1)
+    TriggerServerEvent("QBCore:Server:RemoveItem", "thermite", 1)
     local pos = GetEntityCoords(PlayerPedId())
-    if #(pos - vector3(Config.JewelLocation["HackSecurity"].x, Config.JewelLocation["HackSecurity"].y,Config.JewelLocation["HackSecurity"].z)) < 1.5 then
-        TriggerServerEvent("qb-jewellery:server:SetHackSecurityStatus", "isDone", true)
-        TriggerServerEvent("qb-jewellery:server:SetHackSecurityStatus", "isBusy", false)  
+    if #(pos - vector3(Config.JewelLocation["ThermiteSecurity"].x, Config.JewelLocation["ThermiteSecurity"].y,Config.JewelLocation["ThermiteSecurity"].z)) < 1.5 then
+        TriggerServerEvent("qb-jewellery:server:SetThermiteSecurityStatus", "isDone", true)
+        TriggerServerEvent("qb-jewellery:server:SetThermiteSecurityStatus", "isBusy", false)  
     end
 end
 
 -- Fail Disabled Cameras
-function CamerasFailed()
+function SecurityFailed()
     QBCore.Functions.Notify(Lang:t("error.camera_fail"), "error", 3500)
     --QBCore.Functions.Notify("You Failed To Disabled The Security!", "error")
     PlaySound(-1, "Place_Prop_Fail", "DLC_Dmod_Prop_Editor_Sounds", 0, 0, 1)
@@ -314,12 +310,12 @@ function CamerasFailed()
 end
 
 -- Successfully Disabling Cameras
-function CamerasSucess()
-    QBCore.Functions.Notify(Lang:t("error.camera_success"), "success", 3500)
+function SecuritySuccess()
+    QBCore.Functions.Notify(Lang:t("success.camera_success"), "success", 3500)
     --QBCore.Functions.Notify("You Have Disabled The Security!", "success")
     local pos = GetEntityCoords(PlayerPedId())
     TriggerServerEvent('qb-jewellery:server:policeAlert')
-    TriggerServerEvent("QBCore:Server:RemoveItem", "thermite", 1)
+    TriggerServerEvent("QBCore:Server:RemoveItem", "usb_green", 1)
     if #(pos - vector3(Config.JewelLocation["DisableCameras"].x, Config.JewelLocation["DisableCameras"].y,Config.JewelLocation["DisableCameras"].z)) < 1.5 then
         TriggerServerEvent("qb-jewellery:server:SetCameraStatus", "isDone", true)
         TriggerServerEvent("qb-jewellery:server:SetCameraStatus", "isBusy", false)  
@@ -465,7 +461,7 @@ AddEventHandler('qb-jewellery:client:startbreakinglass', function()
                     if dist < 0.6 then
                         if not Config.Locations[case]["isBusy"] and not Config.Locations[case]["isOpened"] then
                             QBCore.Functions.TriggerCallback('qb-jewellery:server:getCops', function(cops)
-                                if Config.JewelLocation["DisableCameras"].isDone then 
+                                if Config.JewelLocation["DisableCameras"].isDone then
                                     if validWeapon() then
                                         smashVitrine(case)
                                     else
@@ -510,9 +506,9 @@ CreateThread(function()
         options = {
             {
                 type = "client",
-                event = "hackinglaptop:UseHackinglaptop",
+                event = "thermite:UseThermite",
                 icon = 'fas fa-gem',
-                label = 'Hack Security',
+                label = 'Place Thermite',
             }
         },
         distance = 2.5,
@@ -521,27 +517,26 @@ end)
 
 ------ / Export Target / Done & Finished
 
--- Reopen Vangelico Doors
+-- Turns Cameras Off, start grabbing the loot
 CreateThread(function()
-    exports['qb-target']:AddBoxZone("DisableSecurity", vector3(-632.15, -234.95, 38.00), 1.2, 0.1, {
+    exports['qb-target']:AddBoxZone("DisableSecurity", vector3(-629.38, -230.46, 38.06), 0.2, 0.3, {
         name = "DisableCamera",
-        heading = 35.5005,
-        debugPoly = false,
-        minZ = 38.3 - 0.62,
-        maxZ = 38.3 + 1.05,
+        heading = 36.6,
+        debugPoly = true,
+        minZ = 38.3 + 0.15,
+        maxZ = 38.3 + 0.4,
     }, {
         options = {
             {
                 type = "client",
-                event = "thermite:UseThermite",
+                event = "hackinglaptop:UseHackinglaptop",
                 icon = 'fas fa-video',
-                label = 'Disable Cameras',
+                label = 'Connect USB',
             }
         },
-        distance = 5.0,
+        distance = 3.0,
     })
 end)
-
 
 -- Break in Jewellery Cases
 CreateThread(function()

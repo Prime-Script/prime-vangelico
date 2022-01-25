@@ -9,7 +9,7 @@ QB-Target - https://github.com/BerkieBb/qb-target
 
 Thermite Minigame - https://github.com/pushkart2/memorygame
 
-Laptop Minigame - https://github.com/Jesper-Hustad/NoPixel-minigame
+Laptop Minigame - This will be located in the assets folder
 
 # Future Updates
 

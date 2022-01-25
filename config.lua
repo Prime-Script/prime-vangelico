@@ -29,17 +29,17 @@ Config.TimeToLose = 30
 
 ------ / Heist Locations (HackSecurity = Roof Of Vangelico | DisableCameras = Inside Vangelico)
 Config.JewelLocation = {
-    ["HackSecurity"] = {
-        x = -595.8919,
-        y = -283.6023,
-        z = 50.3237,
+    ["ThermiteSecurity"] = {
+        x = -596.26,
+        y = -283.87,
+        z = 50.32,
         isDone = false,
         isBusy = false,
     },
     ["DisableCameras"] = {
-        x = -632.05,
-        y = -235.00,
-        z = 38.05,
+        x = -629.38,
+        y = -230.46,
+        z = 38.06,
         isDone = false,
         isBusy = false,
     },

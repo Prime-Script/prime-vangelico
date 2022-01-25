@@ -3,16 +3,17 @@ local timeOut = false
 local alarmTriggered = false
 local Cooldown = false
 
--- Thermite
+-- First Item Needed
+QBCore.Functions.CreateUseableItem("thermite", function(source, item)
+    local Player = QBCore.Functions.GetPlayer(source)
+    TriggerClientEvent("thermite:UseThermite", source)
+ end)
+
+-- Second Item Needed
 QBCore.Functions.CreateUseableItem("usb_green", function(source, item)
     local Player = QBCore.Functions.GetPlayer(source)
     TriggerClientEvent('hackinglaptop:UseHackinglaptop',source)
  end)
-
-QBCore.Functions.CreateUseableItem("thermite", function(source, item)
-   local Player = QBCore.Functions.GetPlayer(source)
-   TriggerClientEvent("thermite:UseThermite", source)
-end)
 
 RegisterServerEvent("Peely-particleserver")
 AddEventHandler("Peely-particleserver", function(method)
@@ -66,14 +67,14 @@ QBCore.Functions.CreateCallback('qb-jewellery:server:getCops', function(source, 
 end)
 
 -- Hack On Roof Of Vangelico
-RegisterServerEvent('qb-jewellery:server:SetHackSecurityStatus')
-AddEventHandler('qb-jewellery:server:SetHackSecurityStatus', function(stateType, state)
+RegisterServerEvent('qb-jewellery:server:SetThermiteSecurityStatus')
+AddEventHandler('qb-jewellery:server:SetThermiteSecurityStatus', function(stateType, state)
     if stateType == "isBusy" then
-        Config.JewelLocation["HackSecurity"].isBusy = state
+        Config.JewelLocation["ThermiteSecurity"].isBusy = state
     elseif stateType == "isDone" then
-        Config.JewelLocation["HackSecurity"].isDone = state
+        Config.JewelLocation["ThermiteSecurity"].isDone = state
     end
-    TriggerClientEvent('qb-jewellery:client:SetHackSecurityStatus', -1, stateType, state)
+    TriggerClientEvent('qb-jewellery:client:SetThermiteSecurityStatus', -1, stateType, state)
     TriggerEvent('qb-scoreboard:server:SetActivityBusy', "jewellery", false)
 end)
 

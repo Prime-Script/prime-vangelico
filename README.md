@@ -11,10 +11,14 @@ Thermite Minigame - https://github.com/pushkart2/memorygame
 
 Laptop Minigame - https://github.com/Jesper-Hustad/NoPixel-minigame
 
+# Future Updates
+
+| Giving the police the ability to reboot the security system (No option to lock the doors unless the Police press [E])
+| Adding More Dispatch Systems (Will be adding Core, CDD and ERP_MDT when released)
 
 # Installation
 
-Add this to nui_doorlock / config.lua
+Create a file inside nui_doorlock / config, and add this inside the file (this will ensure the door is locked)
 ```
 Config.DoorList['doubledoor'] = {
 	authorizedJobs = { ['police']=0 }, -- ['ambulance']=0, ['bcso']=0

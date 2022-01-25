@@ -13,7 +13,33 @@ Laptop Minigame - https://github.com/Jesper-Hustad/NoPixel-minigame
 
 
 # Installation
-Drag and drop "Vangelico_Heist.lua" into nui_doorlock / config. Nothing Else Is Needed! That's it.
+
+Add this to nui_doorlock / config.lua
+
+Config.DoorList['doubledoor'] = {
+	authorizedJobs = { ['police']=0 }, -- ['ambulance']=0, ['bcso']=0
+	lockpick = false,
+	doors = {
+		{objHash = 1425919976, objHeading = 306.00003051758, objCoords = vec3(-631.955384, -236.333268, 38.206532)},
+		{objHash = 9467943, objHeading = 306.00003051758, objCoords = vec3(-630.426514, -238.437546, 38.206532)}
+    },
+	audioRemote = false,
+	locked = true,
+	slides = false,
+	maxDistance = 2.5,
+    --oldMethod = true,
+    --audioLock = {['file'] = 'metal-locker.ogg', ['volume'] = 0.6},
+    --audioUnlock = {['file'] = 'metallic-creak.ogg', ['volume'] = 0.7},
+    --autoLock = 1000
+}
+
+Add this item to qb-core / shared / items.lua
+
+["usb_green"] 		 	     	 = {["name"] = "usb_green", 					["label"] = "Green USB", 				["weight"] = 5000, 	    ["type"] = "item", 		["image"] = "usb_green.png", 			["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "What is this USB used for?"},
+
+Add usb_green to inventory / html / images
+
+The image will be found in assets
 
 # Problems Optimistion
 If you find problems or better way to optimise the script, feel free to create a PR. Please ensure that all PR's are tested and working!

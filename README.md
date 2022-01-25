@@ -1,5 +1,4 @@
 # Vangelico Heist For QBCore
-# Author 'SocialPeely#4095'
 
 # Requirements
 QB-Framework - https://github.com/qbcore-framework/qb-core
@@ -25,3 +24,5 @@ English
 Other Languages Coming Soon!
 
 [Discord](https://discord.gg/V6kFbN8UFp) | [Website](https://nocityrp.com) | [Tebex](https://nocity.tebex.io/)
+
+# Author 'SocialPeely#4095'

@@ -2,6 +2,7 @@
 # Author 'SocialPeely#4095'
 
 Requirements :
+
 QB-Framework - https://github.com/qbcore-framework/qb-core
 
 PolyZone - https://github.com/qbcore-framework/PolyZone
@@ -18,7 +19,7 @@ Installation :
 | If you find anything wrong / or make any improvements, then make a PR! |
 
 | LOCALES SYSTEM |
-# English Done
-# Other Languages Coming Soon!
+English Done
+Other Languages Coming Soon!
 
 [Discord](https://discord.gg/V6kFbN8UFp) | [Website](https://nocityrp.com) | [Tebex](https://nocity.tebex.io/)

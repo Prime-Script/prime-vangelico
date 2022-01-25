@@ -55,17 +55,6 @@ QBCore.Functions.CreateCallback("qb-jewellery:Callback:Cooldown",function(source
     end
 end)
 
--- Callback For Cops
-QBCore.Functions.CreateCallback('qb-jewellery:server:getCops', function(source, cb)
-	local amount = 0
-    for k, v in pairs(QBCore.Functions.GetQBPlayers()) do
-        if v.PlayerData.job.name == "police" and v.PlayerData.job.onduty then
-            amount = amount + 1
-        end
-    end
-    cb(amount)
-end)
-
 -- Hack On Roof Of Vangelico
 RegisterServerEvent('qb-jewellery:server:SetThermiteSecurityStatus')
 AddEventHandler('qb-jewellery:server:SetThermiteSecurityStatus', function(stateType, state)

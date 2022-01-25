@@ -522,7 +522,7 @@ CreateThread(function()
     exports['qb-target']:AddBoxZone("DisableSecurity", vector3(-629.38, -230.46, 38.06), 0.2, 0.3, {
         name = "DisableCamera",
         heading = 36.6,
-        debugPoly = true,
+        debugPoly = false,
         minZ = 38.3 + 0.15,
         maxZ = 38.3 + 0.4,
     }, {

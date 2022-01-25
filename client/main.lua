@@ -26,7 +26,7 @@ AddEventHandler('thermite:UseThermite', function()
                                     TriggerServerEvent('qb-jewellery:BeginCooldown')
                                 end,
                                 function() -- Fail To Disable Cameras
-                                    ThermiteFail()
+                                    ThermiteFailed()
                                 end)                        
                             else
                                 QBCore.Functions.Notify(Lang:t("error.wrong_equipment"), "error", 3500)

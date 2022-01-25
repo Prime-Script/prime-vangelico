@@ -21,6 +21,4 @@ Installation :
 # English Done
 # Other Languages Coming Soon!
 
-[Discord] | https://discord.gg/LINK
-[Website] | https://nocityrp.com
-[Tebex] | https://nocity.tebex.io/
+[Discord](https://discord.gg/V6kFbN8UFp) | [Website](https://nocityrp.com) | [Tebex](https://nocity.tebex.io/)

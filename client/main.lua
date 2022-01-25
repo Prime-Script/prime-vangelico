@@ -35,17 +35,17 @@ AddEventHandler('hackinglaptop:UseHackinglaptop', function()
                                    disableCombat = false,
                                 },
                             })
-                            HackAnim()
+                            SecurityAnimation()
                             Wait(2000)
                             exports['hacking']:OpenHackingGame(Config.VangelicoTime, Config.VangelicoBlocks, Config.VangelicoRepeat, function(Success)
                                 if Success then
                                     SecuritySuccess()
-                                    HackSuccessAnim()
+                                    SecuritySuccessAnim()
                                     TriggerServerEvent('nui_doorlock:server:updateState', "doubledoor",  false, false, false, true)
                                     TriggerServerEvent('qb-jewellery:BeginCooldown')
                                 else
                                     SecurityFailed()
-                                    HackFailedAnim()
+                                    SecurityFailedAnim()
                                 end
                             end)                        
                         else
@@ -70,7 +70,7 @@ end
 end)
 
 -- Hack Into Security System!
-function HackAnim()
+function SecurityAnimation()
     local animDict = "anim@heists@ornate_bank@hack"
     RequestAnimDict(animDict)
     RequestModel("hei_prop_hst_laptop")
@@ -131,7 +131,7 @@ AddEventHandler('thermite:UseThermite', function()
                     TriggerServerEvent("qb-jewellery:server:SetCameraStatus", "isBusy", true)
                     exports["memorygame"]:thermiteminigame(Config.CorrectBlocks, Config.IncorrectBlocks, Config.TimeToShow, Config.TimeToLose,
                     function() -- Successfully Disable Cameras
-                        ThermiteAnimation1() 
+                        CamerasAnimation() 
                         CamerasSucess()
                         TriggerServerEvent('nui_doorlock:server:updateState', "doubledoor",  false, false, false, true)
                      end,
@@ -173,7 +173,7 @@ AddEventHandler("Peely-ptfxparticle", function(method)
 end)
 
 -- 1st Thermite Animation
-function ThermiteAnimation1() 
+function CamerasAnimation() 
     RequestAnimDict("anim@heists@ornate_bank@thermal_charge")
     RequestModel("hei_p_m_bag_var22_arm_s")
     RequestNamedPtfxAsset("scr_ornate_heist")
@@ -265,7 +265,7 @@ end)
 -- Functions
 
 
-function HackSuccessAnim()
+function SecuritySuccessAnim()
     NetworkStartSynchronisedScene(netScene3)
     Wait(2500)
     NetworkStopSynchronisedScene(netScene3)
@@ -274,7 +274,7 @@ function HackSuccessAnim()
     DeleteObject(card)    
 end
 
-function HackFailedAnim()
+function SecurityFailedAnim()
     NetworkStartSynchronisedScene(netScene3)
     Wait(2500)
     NetworkStopSynchronisedScene(netScene3)

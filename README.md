@@ -3,9 +3,13 @@
 
 Requirements :
 QB-Framework - https://github.com/qbcore-framework/qb-core
+
 PolyZone - https://github.com/qbcore-framework/PolyZone
+
 QB-Target - https://github.com/BerkieBb/qb-target
+
 Thermite Minigame - https://github.com/pushkart2/memorygame
+
 Laptop Minigame - https://github.com/Jesper-Hustad/NoPixel-minigame
 
 Installation : 

@@ -35,6 +35,9 @@ local Translations = {
         -- Vagelico Success
         ["security_success"] = "You Successfully Unlocked The Front Door!",
         ["camera_success"] = "You Successfully Disable The Cameras!",
+
+        -- Police Reboot Security System
+        ["reboot_timer"] = "The System Will Reboot In 30 Seconds!",
     },
 }
 

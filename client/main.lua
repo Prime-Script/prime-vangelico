@@ -477,7 +477,10 @@ end)
 RegisterNetEvent('nc-vangelico:client:rebootsystem')
 AddEventHandler('nc-vangelico:client:rebootsystem', function()
     if job == "police" then
+        Citizen.Wait("30000")
         TriggerServerEvent('nui_doorlock:server:updateState', "doubledoor", true, false, false, true)
+        QBCore.Functions.Notify(Lang:t("error.reboot_timer"), "error", 3500)
+        --QBCore.Functions.Notify("The System Will Reboot In 30 Seconds!", "error")
     else
         QBCore.Functions.Notify(Lang:t("error.system_reboot"), "error", 3500)
         --QBCore.Functions.Notify("You Can Not Reboot The System!", "error")

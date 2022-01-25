@@ -439,11 +439,11 @@ AddEventHandler('nc-vangelico:client:stealjewellery', function()
         for case,_ in pairs(Config.Locations) do
         local distance = #(pos - vector3(Config.Locations[case]["coords"]["x"], Config.Locations[case]["coords"]["y"], Config.Locations[case]["coords"]["z"]))
         local saveDistance = #(pos - vector3(Config.JewelleryLocation["coords"]["x"], Config.JewelleryLocation["coords"]["y"], Config.JewelleryLocation["coords"]["z"]))
-        if Config.JewelLocation["DisableCameras"].isDone then
-            if distance < 30 then
-                inArea = true
-                if distance < 0.6 then
-                    if not Config.Locations[case]["isBusy"] and not Config.Locations[case]["isOpened"] then
+        if distance < 30 then
+            inArea = true
+            if distance < 0.6 then
+                if not Config.Locations[case]["isBusy"] and not Config.Locations[case]["isOpened"] then
+                    if Config.JewelLocation["DisableCameras"].isDone then
                         if validWeapon() then
                             smashVitrine(case)
                         else
@@ -451,17 +451,17 @@ AddEventHandler('nc-vangelico:client:stealjewellery', function()
                             --QBCore.Functions.Notify('This Weapon Isn\'t Strong Enough', 'error')
                         end
                     else
-                        QBCore.Functions.Notify(Lang:t("error.smashed_already"), "error", 3500)
-                        --QBCore.Functions.Notify("This Case Has Already Been Smashed!", "error")
+                        QBCore.Functions.Notify(Lang:t("error.disable_security"), "error", 3500)
+                        --QBCore.Functions.Notify("Destroy The Alarm System!", "error")
                     end
+                else
+                    QBCore.Functions.Notify(Lang:t("error.smashed_already"), "error", 3500)
+                    --QBCore.Functions.Notify("This Case Has Already Been Smashed!", "error")
                 end
-            else
-                QBCore.Functions.Notify(Lang:t("error.distance_check"), "error", 3500)
-                --QBCore.Functions.Notify("You Are Not Close Enough To The Case!", "error")
             end
         else
-            QBCore.Functions.Notify(Lang:t("error.disable_security"), "error", 3500)
-            --QBCore.Functions.Notify("Destroy The Alarm System!", "error")
+            QBCore.Functions.Notify(Lang:t("error.distance_check"), "error", 3500)
+            --QBCore.Functions.Notify("You Are Not Close Enough To The Case!", "error")
         end
     end
     if not inArea then
@@ -476,15 +476,10 @@ end)
 
 RegisterNetEvent('nc-vangelico:client:rebootsystem')
 AddEventHandler('nc-vangelico:client:rebootsystem', function()
-    if job == "police" then
         Citizen.Wait("30000")
         TriggerServerEvent('nui_doorlock:server:updateState', "doubledoor", true, false, false, true)
-        QBCore.Functions.Notify(Lang:t("error.reboot_timer"), "error", 3500)
+        QBCore.Functions.Notify(Lang:t("success.reboot_timer"), "error", 3500)
         --QBCore.Functions.Notify("The System Will Reboot In 30 Seconds!", "error")
-    else
-        QBCore.Functions.Notify(Lang:t("error.system_reboot"), "error", 3500)
-        --QBCore.Functions.Notify("You Can Not Reboot The System!", "error")
-    end
 end)
 
 ------ / Events / Done & Finished
@@ -531,7 +526,7 @@ CreateThread(function()
             {
                 type = "client",
                 event = "hackinglaptop:UseHackinglaptop",
-                icon = 'fas fa-usb',
+                icon = 'fab fa-usb',
                 label = 'Connect USB',
             },
             {

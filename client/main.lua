@@ -119,7 +119,7 @@ AddEventHandler('hackinglaptop:UseHackinglaptop', function()
                 if hasItem then
                     TriggerEvent('inventory:client:requiredItems', requiredItems, false)
                     TriggerServerEvent("qb-jewellery:server:SetThermiteSecurityStatus", "isBusy", true)
-                    QBCore.Functions.Progressbar("power_hack", "Connecting...", math.random(5500, 5600), false, true, {
+                    QBCore.Functions.Progressbar("power_hack", "Connecting...", math.random(6400, 6500), false, true, {
                            useWhileDead = false,
                            canCancel = false,
                            controlDisables = {
@@ -130,7 +130,7 @@ AddEventHandler('hackinglaptop:UseHackinglaptop', function()
                         },
                     })
                     SecurityAnimation()
-                    Wait(2000)
+                    Wait(1700)
                     exports['hacking']:OpenHackingGame(Config.VangelicoTime, Config.VangelicoBlocks, Config.VangelicoRepeat, function(Success)
                         if Success then
                             SecuritySuccess()
@@ -476,10 +476,10 @@ end)
 
 RegisterNetEvent('nc-vangelico:client:rebootsystem')
 AddEventHandler('nc-vangelico:client:rebootsystem', function()
-        Citizen.Wait("30000")
-        TriggerServerEvent('nui_doorlock:server:updateState', "doubledoor", true, false, false, true)
-        QBCore.Functions.Notify(Lang:t("success.reboot_timer"), "error", 3500)
+	QBCore.Functions.Notify(Lang:t("success.reboot_timer"), "error", 3500)
         --QBCore.Functions.Notify("The System Will Reboot In 30 Seconds!", "error")
+	Citizen.Wait(30000)
+        TriggerServerEvent('nui_doorlock:server:updateState', "doubledoor", true, false, false, true)
 end)
 
 ------ / Events / Done & Finished

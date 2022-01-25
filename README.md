@@ -22,7 +22,9 @@ Installation :
 | If you find anything wrong / or make any improvements, then make a PR! |
 
 | LOCALES SYSTEM |
-English Done
+
+English
+
 Other Languages Coming Soon!
 
 [Discord](https://discord.gg/V6kFbN8UFp) | [Website](https://nocityrp.com) | [Tebex](https://nocity.tebex.io/)

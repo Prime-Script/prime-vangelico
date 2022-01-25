@@ -15,7 +15,7 @@ Laptop Minigame - https://github.com/Jesper-Hustad/NoPixel-minigame
 # Installation
 
 Add this to nui_doorlock / config.lua
-
+```
 Config.DoorList['doubledoor'] = {
 	authorizedJobs = { ['police']=0 }, -- ['ambulance']=0, ['bcso']=0
 	lockpick = false,
@@ -32,10 +32,13 @@ Config.DoorList['doubledoor'] = {
     --audioUnlock = {['file'] = 'metallic-creak.ogg', ['volume'] = 0.7},
     --autoLock = 1000
 }
+```
 
 Add this item to qb-core / shared / items.lua
 
+```
 ["usb_green"] 		 	     	 = {["name"] = "usb_green", 					["label"] = "Green USB", 				["weight"] = 5000, 	    ["type"] = "item", 		["image"] = "usb_green.png", 			["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "What is this USB used for?"},
+```
 
 Add usb_green to inventory / html / images
 

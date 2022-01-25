@@ -109,19 +109,6 @@ AddEventHandler('qb-jewellery:server:policeAlert', function()
     end
 end)
 
-
--- Callback
-
-QBCore.Functions.CreateCallback('qb-jewellery:server:getCops', function(source, cb)
-	local amount = 0
-    for k, v in pairs(QBCore.Functions.GetQBPlayers()) do
-        if v.PlayerData.job.name == "police" and v.PlayerData.job.onduty then
-            amount = amount + 1
-        end
-    end
-    cb(amount)
-end)
-
 -- Events
 
 RegisterNetEvent('qb-jewellery:server:setVitrineState', function(stateType, state, k)

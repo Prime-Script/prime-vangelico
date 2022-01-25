@@ -53,8 +53,8 @@ The image will be found in assets
 If you find problems or better way to optimise the script, feel free to create a PR. Please ensure that all PR's are tested and working!
 
 # Locales System
-English
-Turkish
+
+English, Turkish
 
 Other Languages Coming Soon!
 

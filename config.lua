@@ -2,7 +2,7 @@ Config = Config or {}
 
 ------ / These are the only working Dispatch Systems that are in place for the alert, however more can be added!
 ------ / "Core" / "Linden" / "DP"
---Config.Dispatch = "Linden" ------ / THIS IS COMING SOON! NEED TO ADD THE OTHER EXPORTS
+Config.Dispatch = "LINDEN" ------ / THIS IS COMING SOON! NEED TO ADD THE OTHER EXPORTS
 
 ------ / Police Required To Start Heist
 Config.RequiredCops = 0

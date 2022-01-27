@@ -119,7 +119,7 @@ AddEventHandler('hackinglaptop:UseHackinglaptop', function()
                 if hasItem then
                     TriggerEvent('inventory:client:requiredItems', requiredItems, false)
                     TriggerServerEvent("qb-jewellery:server:SetThermiteSecurityStatus", "isBusy", true)
-                    QBCore.Functions.Progressbar("power_hack", "Connecting...", math.random(6400, 6500), false, true, {
+                    QBCore.Functions.Progressbar("power_hack", "Connecting...", math.random(5500, 5600), false, true, {
                            useWhileDead = false,
                            canCancel = false,
                            controlDisables = {
@@ -130,7 +130,7 @@ AddEventHandler('hackinglaptop:UseHackinglaptop', function()
                         },
                     })
                     SecurityAnimation()
-                    Wait(1700)
+                    Wait(2000)
                     exports['hacking']:OpenHackingGame(Config.VangelicoTime, Config.VangelicoBlocks, Config.VangelicoRepeat, function(Success)
                         if Success then
                             SecuritySuccess()

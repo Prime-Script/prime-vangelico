@@ -5,7 +5,7 @@ Config = Config or {}
 Config.Dispatch = "LINDEN" ------ / THIS IS COMING SOON! NEED TO ADD THE OTHER EXPORTS
 
 ------ / Police Required To Start Heist
-Config.RequiredCops = 0
+Config.RequiredCops = 3
 
 ------ / Set CoolDown Between Each Of Heist JewelLocation
 Config.Cooldown = 360
@@ -22,10 +22,10 @@ Config.VangelicoBlocks = 4
 Config.VangelicoRepeat = 2
 
 ------ / Destroy The Security System / Thermite Minigame
-Config.CorrectBlocks = 16 
+Config.CorrectBlocks = 16
 Config.IncorrectBlocks = 3 
-Config.TimeToShow = 4 
-Config.TimeToLose = 30
+Config.TimeToShow = 6 
+Config.TimeToLose = 20
 
 ------ / Heist Locations (HackSecurity = Roof Of Vangelico | DisableCameras = Inside Vangelico)
 Config.JewelLocation = {

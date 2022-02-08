@@ -1,15 +1,15 @@
 # Vangelico Heist For QBCore
 
 # Requirements
-QB-Framework - https://github.com/qbcore-framework/qb-core
+- QB-Framework: https://github.com/qbcore-framework/qb-core
 
-PolyZone - https://github.com/qbcore-framework/PolyZone
+- PolyZone: https://github.com/qbcore-framework/PolyZone
 
-QB-Target - https://github.com/BerkieBb/qb-target
+- QB-Target: https://github.com/BerkieBb/qb-target
 
-Thermite Minigame - This will be located in the assets folder
+- Thermite Minigame: This will be located in the assets folder
 
-Laptop Minigame - This will be located in the assets folder
+- Laptop Minigame: This will be located in the assets folder
 
 # Future Updates
 

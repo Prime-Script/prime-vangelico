@@ -30,6 +30,9 @@ local Translations = {
         -- Smash The Case System
         ["smashed_already"] = "This Case Has Already Been Smashed!",
         ["distance_check"] = "You Are Not Close Enough To The Case!",
+
+        -- Door Check
+        ["door_system"] = "This Door System Is Not Added!",
     },
     success = {
         -- Vagelico Success

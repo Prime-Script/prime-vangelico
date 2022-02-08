@@ -1,15 +1,15 @@
 fx_version 'cerulean'
 game 'gta5'
 
-author "NOCITY SCRIPTS | SocialPeely#4095"
-description 'Jewellery Robberry for QBCore'
+author "Prime Scripts | SocialPeely#4095"
+description 'Vangelico Heist for QBCore'
 version '1.0.0'
 
 lua54 'yes'
 
 shared_scripts {
     '@qb-core/shared/locale.lua',
-    'locales/en.lua', -- Change Depending On The Language
+    'locales/en.lua', -- Change to the available languages | en.lua | fr.lua | tr.lua
     'config.lua'
 }
 

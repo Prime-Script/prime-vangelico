@@ -1,25 +1,25 @@
 # Vangelico Heist For QBCore
 
 # Requirements
-QB-Framework - https://github.com/qbcore-framework/qb-core
+- QB-Framework: https://github.com/qbcore-framework/qb-core
 
-PolyZone - https://github.com/qbcore-framework/PolyZone
+- PolyZone: https://github.com/qbcore-framework/PolyZone
 
-QB-Target - https://github.com/BerkieBb/qb-target
+- QB-Target: https://github.com/BerkieBb/qb-target
 
-Thermite Minigame - https://github.com/pushkart2/memorygame
+- Thermite Minigame: This will be located in the discord | Vangelico Heist / #Requirements
 
-Laptop Minigame - This will be located in the assets folder
+- Laptop Minigame: This will be located in the discord | Vangelico Heist / #Requirements
 
 # Future Updates
 
-| Giving the police the ability to reboot the security system (No option to lock the doors unless the Police press [E])
+- Adding Translations to the progressbar
 
-| Adding More Dispatch Systems (Will be adding Core, CDD and ERP_MDT when released)
+- Adding More Dispatch Systems (Will be adding Core, CDD and ERP_MDT when released)
 
 # Installation
 
-Create a file inside nui_doorlock / config, and add this inside the file (this will ensure the door is locked)
+- Create a file inside nui_doorlock / config, and add this inside the file (this will ensure the door is locked)
 ```
 Config.DoorList['doubledoor'] = {
 	authorizedJobs = { ['police']=0 }, -- ['ambulance']=0, ['bcso']=0
@@ -39,25 +39,22 @@ Config.DoorList['doubledoor'] = {
 }
 ```
 
-Add this item to qb-core / shared / items.lua
+- Add this item to qb-core / shared / items.lua
 
 ```
 ["usb_green"] 		 	     	 = {["name"] = "usb_green", 					["label"] = "Green USB", 				["weight"] = 5000, 	    ["type"] = "item", 		["image"] = "usb_green.png", 			["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "What is this USB used for?"},
 ```
 
-Add usb_green to inventory / html / images
+- Add usb_green to inventory / html / images
 
-The image will be found in assets
-
-# Problems Optimistion
-If you find problems or better way to optimise the script, feel free to create a PR. Please ensure that all PR's are tested and working!
+This will be located in the discord | Vangelico Heist / #Requirements
 
 # Locales System
 
-English, Turkish, French
+- English, Turkish, French
 
 Other Languages Coming Soon!
 
-[Discord](https://discord.gg/V6kFbN8UFp) | [Website](https://nocityrp.com) | [Tebex](https://nocity.tebex.io/)
+[Discord](https://discord.gg/GXxpdEX3c4) | [Tebex](https://prime-scripts.tebex.io/)
 
 # Author 'SocialPeely#4095'

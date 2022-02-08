@@ -22,7 +22,15 @@ AddEventHandler('thermite:UseThermite', function()
                                 function() -- Successfully Disable Cameras
                                     ThermiteAnimation() 
                                     ThermiteSuccess()
-                                    TriggerServerEvent('nui_doorlock:server:updateState', "doubledoor",  false, false, false, true)
+                                    -- This will open the front door to enter vangelico
+                                    if Config.DoorLock == "nui" then
+                                        TriggerServerEvent('nui_doorlock:server:updateState', "doubledoor", false, false, false, true)
+                                    else if Config.DoorLock == "qb" then
+                                        TriggerServerEvent('qb-doorlock:server:updateState', Config.QBDoorID, false)
+                                    else
+                                        QBCore.Functions.Notify(Lang:t("error.door_system"), "error", 3500)
+                                    end
+                                end
                                     TriggerServerEvent('qb-jewellery:BeginCooldown')
                                 end,
                                 function() -- Fail To Disable Cameras
@@ -441,7 +449,7 @@ AddEventHandler('nc-vangelico:client:stealjewellery', function()
         local saveDistance = #(pos - vector3(Config.JewelleryLocation["coords"]["x"], Config.JewelleryLocation["coords"]["y"], Config.JewelleryLocation["coords"]["z"]))
         if distance < 30 then
             inArea = true
-            if distance < 0.6 then
+            if distance < 3.0 then
                 if not Config.Locations[case]["isBusy"] and not Config.Locations[case]["isOpened"] then
                     if Config.JewelLocation["DisableCameras"].isDone then
                         if validWeapon() then
@@ -472,14 +480,22 @@ end
 
 end)
 
------- / Event for police to reboot alarm system!
+------ / Event for police to reboot alarm system! This will lock the doors after 30 seconds
 
 RegisterNetEvent('nc-vangelico:client:rebootsystem')
 AddEventHandler('nc-vangelico:client:rebootsystem', function()
-	QBCore.Functions.Notify(Lang:t("success.reboot_timer"), "error", 3500)
-        --QBCore.Functions.Notify("The System Will Reboot In 30 Seconds!", "error")
-	Citizen.Wait(30000)
+    QBCore.Functions.Notify(Lang:t("success.reboot_timer"), "success", 3500)
+    if Config.DoorLock == "nui" then
+        Citizen.Wait(30000)
         TriggerServerEvent('nui_doorlock:server:updateState', "doubledoor", true, false, false, true)
+    else if Config.DoorLock == "qb" then
+        Citizen.Wait(30000)
+        TriggerServerEvent('qb-doorlock:server:updateState', Config.QBDoorID, true)
+    else
+        QBCore.Functions.Notify(Lang:t("error.door_system"), "error", 3500)
+    end
+end
+
 end)
 
 ------ / Events / Done & Finished

@@ -96,7 +96,7 @@ AddEventHandler('qb-jewellery:server:policeAlert', function()
         local Player = QBCore.Functions.GetPlayer(v)
         if Player ~= nil then 
             if (Player.PlayerData.job.name == "police") then
-                if Config.DispatchSystem == "LINDEN" then
+                if Config.Dispatch == "Linden" then
                     local data = {displayCode = '10-11B', description = 'System Failure', isImportant = 0, recipientList = {'police'}, length = '5000', infoM = 'fas fa-bolt', info = 'Suspicious Activity At Vangelico', 
                     blipSprite = 487, blipColour = 3, blipScale = 1.2}
                     local dispatchData = {dispatchData = data, caller = 'Local', coords = vector3(-596.6, -283.97, 50.34)}

@@ -21,7 +21,7 @@
 
 - Create a file inside nui_doorlock / config, and add this inside the file (this will ensure the door is locked)
 ```
-Config.DoorList['doubledoor'] = {
+Config.DoorList['vangelicodoor'] = {
 	authorizedJobs = { ['police']=0 }, -- ['ambulance']=0, ['bcso']=0
 	lockpick = false,
 	doors = {

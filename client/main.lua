@@ -22,6 +22,9 @@ AddEventHandler('thermite:UseThermite', function()
                                 function() -- Successfully Disable Cameras
                                     ThermiteAnimation() 
                                     ThermiteSuccess()
+                                    TriggerServerEvent('qb-jewellery:BeginCooldown')
+
+                                    -- Door Dependency (NUI or QB)
                                     if Config.DoorLock == "nui" then
                                         -- Successfully Complete Thermite Game (Open Door)
                                         TriggerServerEvent('nui_doorlock:server:updateState', "vangelicodoor", false, false, false, true)
@@ -32,7 +35,7 @@ AddEventHandler('thermite:UseThermite', function()
                                         QBCore.Functions.Notify(Lang:t("error.door_system"), "error", 3500)
                                     end
                                 end
-                                    TriggerServerEvent('qb-jewellery:BeginCooldown')
+
                                 end,
                                 function() -- Fail To Disable Cameras
                                     ThermiteFailed()

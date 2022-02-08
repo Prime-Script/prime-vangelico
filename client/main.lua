@@ -481,7 +481,7 @@ CreateThread(function()
     exports['qb-target']:AddBoxZone("HackSecurity", vector3(-595.8919, -283.6523, 50.3237), 0.40, 0.90, {
         name = "StartJewel",
         heading = 302.7994,
-        debugPoly = false,
+        debugPoly = Config.PolyZone,
         minZ = 50.3 - 0.2,
         maxZ = 50.3 + 1.0,
     }, {
@@ -501,7 +501,7 @@ CreateThread(function()
     exports['qb-target']:AddBoxZone("DisableSecurity", vector3(-629.38, -230.46, 38.06), 0.2, 0.3, {
         name = "DisableCamera",
         heading = 36.6,
-        debugPoly = false,
+        debugPoly = Config.PolyZone,
         minZ = 38.3 + 0.15,
         maxZ = 38.3 + 0.4,
     }, {
@@ -529,7 +529,7 @@ CreateThread(function()
         exports['qb-target']:AddBoxZone("JewelleryCase"..k, vector3(v.coords.x, v.coords.y, v.coords.z-1), 0.6, 1.2, {
             name = "JewelleryCase"..k,
             heading = v.coords.w,
-            debugPoly = true,
+            debugPoly = Config.PolyZone,
             minZ = 37.65,
             maxZ = 38.35,
             }, {

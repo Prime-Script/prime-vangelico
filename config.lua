@@ -48,6 +48,11 @@ Config.JewelLocation = {
     },
 }
 
+
+------ / If set to true it will show the Poly Zones | If set to false it will hide the PolyZones (Green Zones)
+
+Config.PolyZone = false
+
 ------ / Set Location Of Each Vitrine Case
 Config.Locations = {
     [1] = {

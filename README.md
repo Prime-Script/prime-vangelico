@@ -7,9 +7,9 @@
 
 - QB-Target: https://github.com/BerkieBb/qb-target
 
-- Thermite Minigame: This will be located in the discord | Vangelico Heist / #Requirements
+- Thermite Minigame: This will be located in the folder assets
 
-- Laptop Minigame: This will be located in the discord | Vangelico Heist / #Requirements
+- Laptop Minigame: This will be located in the folder assets
 
 # Future Updates
 
@@ -47,7 +47,7 @@ Config.DoorList['vangelicodoor'] = {
 
 - Add usb_green to inventory / html / images
 
-This will be located in the discord | Vangelico Heist / #Requirements
+This will be located in the folder assets
 
 # Locales System
 

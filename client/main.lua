@@ -24,7 +24,7 @@ AddEventHandler('thermite:UseThermite', function()
                                     ThermiteSuccess()
                                     if Config.DoorLock == "nui" then
                                         -- Successfully Complete Thermite Game (Open Door)
-                                        TriggerServerEvent('nui_doorlock:server:updateState', "doubledoor", false, false, false, true)
+                                        TriggerServerEvent('nui_doorlock:server:updateState', "vangelicodoor", false, false, false, true)
                                     else if Config.DoorLock == "qb" then
                                         -- Successfully Complete Thermite Game (Open Door)
                                         TriggerServerEvent('qb-doorlock:server:updateState', Config.QBDoorID, false)
@@ -124,7 +124,7 @@ AddEventHandler('hackinglaptop:UseHackinglaptop', function()
     local pos = GetEntityCoords(PlayerPedId())
     if #(pos - vector3(Config.JewelLocation["DisableCameras"].x, Config.JewelLocation["DisableCameras"].y,Config.JewelLocation["DisableCameras"].z)) < 1.5 then
         QBCore.Functions.TriggerCallback('QBCore:HasItem', function(hasItem)
-            if Config.JewelLocation["ThermiteSecurity"].isDone then
+            --if Config.JewelLocation["ThermiteSecurity"].isDone then
                 if hasItem then
                     TriggerEvent('inventory:client:requiredItems', requiredItems, false)
                     TriggerServerEvent("qb-jewellery:server:SetThermiteSecurityStatus", "isBusy", true)
@@ -155,10 +155,10 @@ AddEventHandler('hackinglaptop:UseHackinglaptop', function()
                     --QBCore.Functions.Notify("You Don\'t Have The Correct Equipment!", "error")   
                 end
 
-            else
-                QBCore.Functions.Notify(Lang:t("error.cooldown_disable"), "error", 3500)
+            --else
+                --QBCore.Functions.Notify(Lang:t("error.cooldown_disable"), "error", 3500)
                 --QBCore.Functions.Notify("You Haven't Hacked The Security System Yet!", "error")
-            end
+            --end
             
         end, "usb_green")
         
@@ -453,17 +453,17 @@ AddEventHandler('nc-vangelico:client:stealjewellery', function()
             inArea = true
             if distance < 3.0 then
                 if not Config.Locations[case]["isBusy"] and not Config.Locations[case]["isOpened"] then
-                    if Config.JewelLocation["DisableCameras"].isDone then
+                    --if Config.JewelLocation["DisableCameras"].isDone then
                         if validWeapon() then
                             smashVitrine(case)
                         else
                             QBCore.Functions.Notify(Lang:t("error.weak_weapon"), "error", 3500)
                             --QBCore.Functions.Notify('This Weapon Isn\'t Strong Enough', 'error')
                         end
-                    else
-                        QBCore.Functions.Notify(Lang:t("error.disable_security"), "error", 3500)
+                    --else
+                        --QBCore.Functions.Notify(Lang:t("error.disable_security"), "error", 3500)
                         --QBCore.Functions.Notify("Destroy The Alarm System!", "error")
-                    end
+                    --end
                 else
                     QBCore.Functions.Notify(Lang:t("error.smashed_already"), "error", 3500)
                     --QBCore.Functions.Notify("This Case Has Already Been Smashed!", "error")
@@ -489,7 +489,7 @@ AddEventHandler('nc-vangelico:client:rebootsystem', function()
     QBCore.Functions.Notify(Lang:t("success.reboot_timer"), "success", 3500)
     if Config.DoorLock == "nui" then
         Citizen.Wait(30000)
-        TriggerServerEvent('nui_doorlock:server:updateState', "doubledoor", true, false, false, true)
+        TriggerServerEvent('nui_doorlock:server:updateState', "vangelicodoor", true, false, false, true)
         QBCore.Functions.Notify(Lang:t("success.reboot_timer"), "success", 3500)
     else if Config.DoorLock == "qb" then
         Citizen.Wait(30000)

@@ -49,10 +49,6 @@ Config.DoorList['doubledoor'] = {
 
 This will be located in the assets folder
 
-# Problems Optimistion
-
-- If you find problems or better way to optimise the script, feel free to create a PR. Please ensure that all PR's are tested and working!
-
 # Locales System
 
 - English, Turkish, French

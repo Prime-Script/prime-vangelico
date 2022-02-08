@@ -380,7 +380,7 @@ function loadParticle()
 end
 
 -- Checks Player For Whitelisted Weapon
-function validWeapon()
+local function validWeapon()
     local ped = PlayerPedId()
     local pedWeapon = GetSelectedPedWeapon(ped)
 
@@ -393,97 +393,58 @@ function validWeapon()
 end
 
 -- Creates Stage For Stealing From Cases / Needs Updating
-function smashVitrine(k)
-    local animDict = "missheist_jewel"
-    local animName = "smash_case"
-    local ped = PlayerPedId()
-    local plyCoords = GetOffsetFromEntityInWorldCoords(ped, 0, 0.6, 0)
-    local pedWeapon = GetSelectedPedWeapon(ped)
-    if math.random(1, 100) <= 80 and not IsWearingHandshoes() then
-        TriggerServerEvent("evidence:server:CreateFingerDrop", plyCoords)
-    elseif math.random(1, 100) <= 5 and IsWearingHandshoes() then
-        TriggerServerEvent("evidence:server:CreateFingerDrop", plyCoords)
-        QBCore.Functions.Notify(Lang:t("error.fingerprints_left"), "success", 3500)
-        --QBCore.Functions.Notify('You\'ve Left Fingerprints On The Glass', 'error')
-    end
-    smashing = true
-    QBCore.Functions.Progressbar("smash_vitrine", "Grabbing Jewellery", Config.WhitelistedWeapons[pedWeapon]["timeOut"], false, true, {
-        disableMovement = true,
-        disableCarMovement = true,
-        disableMouse = false,
-        disableCombat = true,
-    }, {}, {}, {}, function() -- Done
-        TriggerServerEvent('qb-jewellery:server:setVitrineState', "isOpened", true, k)
-        TriggerServerEvent('qb-jewellery:server:setVitrineState', "isBusy", false, k)
-        TriggerServerEvent('qb-jewellery:server:vitrineReward')
-        TriggerServerEvent('qb-jewellery:server:setTimeout')
-        TriggerServerEvent('police:server:policeAlert', 'Robbery in progress')
-        smashing = false
-        TaskPlayAnim(ped, animDict, "exit", 3.0, 3.0, -1, 2, 0, 0, 0, 0)
-    end, function() -- Cancel
-        TriggerServerEvent('qb-jewellery:server:setVitrineState', "isBusy", false, k)
-        smashing = false
-        TaskPlayAnim(ped, animDict, "exit", 3.0, 3.0, -1, 2, 0, 0, 0, 0)
-    end)
-    TriggerServerEvent('qb-jewellery:server:setVitrineState', "isBusy", true, k)
-
-    CreateThread(function()
-        while smashing do
-            loadAnimDict(animDict)
-            TaskPlayAnim(ped, animDict, animName, 3.0, 3.0, -1, 2, 0, 0, 0, 0 )
-            Wait(500)
-            TriggerServerEvent("InteractSound_SV:PlayOnSource", "breaking_vitrine_glass", 0.25)
-            loadParticle()
-            StartParticleFxLoopedAtCoord("scr_jewel_cab_smash", plyCoords.x, plyCoords.y, plyCoords.z, 0.0, 0.0, 0.0, 1.0, false, false, false, false)
-            Wait(2500)
-        end
-    end)
-end
-
-------- / Done & Finished
-
-RegisterNetEvent('nc-vangelico:client:stealjewellery')
-AddEventHandler('nc-vangelico:client:stealjewellery', function()
-    local ped = PlayerPedId()
-    local pos = GetEntityCoords(ped)
-    inArea = false
-
-    if QBCore ~= nil and isLoggedIn then
-        for case,_ in pairs(Config.Locations) do
-        local distance = #(pos - vector3(Config.Locations[case]["coords"]["x"], Config.Locations[case]["coords"]["y"], Config.Locations[case]["coords"]["z"]))
-        local saveDistance = #(pos - vector3(Config.JewelleryLocation["coords"]["x"], Config.JewelleryLocation["coords"]["y"], Config.JewelleryLocation["coords"]["z"]))
-        if distance < 30 then
-            inArea = true
-            if distance < 3.0 then
-                if not Config.Locations[case]["isBusy"] and not Config.Locations[case]["isOpened"] then
-                    --if Config.JewelLocation["DisableCameras"].isDone then
-                        if validWeapon() then
-                            smashVitrine(case)
-                        else
-                            QBCore.Functions.Notify(Lang:t("error.weak_weapon"), "error", 3500)
-                            --QBCore.Functions.Notify('This Weapon Isn\'t Strong Enough', 'error')
-                        end
-                    --else
-                        --QBCore.Functions.Notify(Lang:t("error.disable_security"), "error", 3500)
-                        --QBCore.Functions.Notify("Destroy The Alarm System!", "error")
-                    --end
-                else
-                    QBCore.Functions.Notify(Lang:t("error.smashed_already"), "error", 3500)
-                    --QBCore.Functions.Notify("This Case Has Already Been Smashed!", "error")
-                end
+local function smashVitrine(k)
+    if Config.JewelLocation["DisableCameras"].isDone then
+        if validWeapon() then
+            local animDict = "missheist_jewel"
+            local animName = "smash_case"
+            local ped = PlayerPedId()
+            local plyCoords = GetOffsetFromEntityInWorldCoords(ped, 0, 0.6, 0)
+            local pedWeapon = GetSelectedPedWeapon(ped)
+            if math.random(1, 100) <= 80 and not IsWearingHandshoes() then
+                TriggerServerEvent("evidence:server:CreateFingerDrop", plyCoords)
+            elseif math.random(1, 100) <= 5 and IsWearingHandshoes() then
+                TriggerServerEvent("evidence:server:CreateFingerDrop", plyCoords)
+                QBCore.Functions.Notify("You've left a fingerprint on the glass", "error")
             end
-        else
-            QBCore.Functions.Notify(Lang:t("error.distance_check"), "error", 3500)
-            --QBCore.Functions.Notify("You Are Not Close Enough To The Case!", "error")
-        end
-    end
-    if not inArea then
-        Citizen.Wait(2000)
-    end
-    Citizen.Wait(3)
-end
+        smashing = true
+        QBCore.Functions.Progressbar("smash_vitrine", "Grabbing Jewellery", Config.WhitelistedWeapons[pedWeapon]["timeOut"], false, true, {
+            disableMovement = true,
+                disableCarMovement = true,
+                disableMouse = false,
+                disableCombat = true,
+            }, {}, {}, {}, function() -- Done
+                TriggerServerEvent('qb-jewellery:server:setVitrineState', "isOpened", true, k)
+                TriggerServerEvent('qb-jewellery:server:setVitrineState', "isBusy", false, k)
+                TriggerServerEvent('qb-jewellery:server:vitrineReward')
+                TriggerServerEvent('qb-jewellery:server:setTimeout')
+                smashing = false
+                TaskPlayAnim(ped, animDict, "exit", 3.0, 3.0, -1, 2, 0, 0, 0, 0)
+            end, function() -- Cancel
+                TriggerServerEvent('qb-jewellery:server:setVitrineState', "isBusy", false, k)
+                smashing = false
+                TaskPlayAnim(ped, animDict, "exit", 3.0, 3.0, -1, 2, 0, 0, 0, 0)
+            end)
+            TriggerServerEvent('qb-jewellery:server:setVitrineState', "isBusy", true, k)
 
-end)
+            CreateThread(function()
+                while smashing do
+                    loadAnimDict(animDict)
+                    TaskPlayAnim(ped, animDict, animName, 3.0, 3.0, -1, 2, 0, 0, 0, 0 )
+                    Wait(500)
+                    TriggerServerEvent("InteractSound_SV:PlayOnSource", "breaking_vitrine_glass", 0.25)
+                    loadParticle()
+                    StartParticleFxLoopedAtCoord("scr_jewel_cab_smash", plyCoords.x, plyCoords.y, plyCoords.z, 0.0, 0.0, 0.0, 1.0, false, false, false, false)
+                    Wait(2500)
+                end
+            end)
+        else
+            QBCore.Functions.Notify(Lang:t("error.weak_weapon"), "error", 3500)
+        end
+    else
+        QBCore.Functions.Notify(Lang:t("error.disable_security"), "error", 3500)
+    end
+end
 
 ------ / Event for police to reboot alarm system! This will lock the doors after 30 seconds
 
@@ -513,8 +474,10 @@ end)
 
 ------ / Export Target / Done & Finished
 
--- Open Vangelico Doors
 CreateThread(function()
+
+    -- Start The Heist and open the doors
+
     exports['qb-target']:AddBoxZone("HackSecurity", vector3(-595.8919, -283.6523, 50.3237), 0.40, 0.90, {
         name = "StartJewel",
         heading = 302.7994,
@@ -532,12 +495,9 @@ CreateThread(function()
         },
         distance = 2.5,
     })
-end)
 
------- / Export Target / Done & Finished
+    -- Turns Cameras Off, start grabbing the loot
 
--- Turns Cameras Off, start grabbing the loot
-CreateThread(function()
     exports['qb-target']:AddBoxZone("DisableSecurity", vector3(-629.38, -230.46, 38.06), 0.2, 0.3, {
         name = "DisableCamera",
         heading = 36.6,
@@ -562,27 +522,35 @@ CreateThread(function()
         },
         distance = 3.0,
     })
-end)
 
--- Break in Jewellery Cases
-CreateThread(function()
-    local models = {
-        'des_jewel_cab_start',
-        'des_jewel_cab2_start',
-        'des_jewel_cab3_start',
-        'des_jewel_cab4_start',
-    }
-    exports['qb-target']:AddTargetModel(models, {
-        options = {
-            {
-                type = "client",
-                event = "nc-vangelico:client:stealjewellery",
-                icon = "fas fa-gem",
-                label = "Smash Case!",
-            }
-        },
-        distance = 2.5,
-    })
+    -- Break in Jewellery Cases
+
+    for k, v in pairs(Config.Locations) do
+        exports['qb-target']:AddBoxZone("JewelleryCase"..k, vector3(v.coords.x, v.coords.y, v.coords.z-1), 0.6, 1.2, {
+            name = "JewelleryCase"..k,
+            heading = v.coords.w,
+            debugPoly = true,
+            minZ = 37.65,
+            maxZ = 38.35,
+            }, {
+                options = { 
+                {
+                    action = function()
+                        smashVitrine(k)
+                    end,
+                    icon = 'fas fa-gem',
+                    label = 'Smash Case!',
+                    canInteract = function()
+                        if v["isOpened"] or v["isBusy"] then 
+                            return false
+                        end
+                        return true
+                    end,
+                }
+            },
+            distance = 1.5,
+        })
+    end
 end)
 
 ------ / Blip Location / Done & Finished

@@ -22,10 +22,11 @@ AddEventHandler('thermite:UseThermite', function()
                                 function() -- Successfully Disable Cameras
                                     ThermiteAnimation() 
                                     ThermiteSuccess()
-                                    -- This will open the front door to enter vangelico
                                     if Config.DoorLock == "nui" then
+                                        -- Successfully Complete Thermite Game (Open Door)
                                         TriggerServerEvent('nui_doorlock:server:updateState', "doubledoor", false, false, false, true)
                                     else if Config.DoorLock == "qb" then
+                                        -- Successfully Complete Thermite Game (Open Door)
                                         TriggerServerEvent('qb-doorlock:server:updateState', Config.QBDoorID, false)
                                     else
                                         QBCore.Functions.Notify(Lang:t("error.door_system"), "error", 3500)
@@ -139,7 +140,8 @@ AddEventHandler('hackinglaptop:UseHackinglaptop', function()
                     })
                     SecurityAnimation()
                     Wait(2000)
-                    exports['hacking']:OpenHackingGame(Config.VangelicoTime, Config.VangelicoBlocks, Config.VangelicoRepeat, function(Success)
+                    exports['hacking']:OpenHackingGame(Config.VangelicoTime, Config.VangelicoBlocks, Config.VangelicoRepeat, 
+                    function(Success)
                         if Success then
                             SecuritySuccess()
                             SecuritySuccessAnim()
@@ -488,9 +490,11 @@ AddEventHandler('nc-vangelico:client:rebootsystem', function()
     if Config.DoorLock == "nui" then
         Citizen.Wait(30000)
         TriggerServerEvent('nui_doorlock:server:updateState', "doubledoor", true, false, false, true)
+        QBCore.Functions.Notify(Lang:t("success.reboot_timer"), "success", 3500)
     else if Config.DoorLock == "qb" then
         Citizen.Wait(30000)
         TriggerServerEvent('qb-doorlock:server:updateState', Config.QBDoorID, true)
+        QBCore.Functions.Notify(Lang:t("success.door_locked"), "success", 3500)
     else
         QBCore.Functions.Notify(Lang:t("error.door_system"), "error", 3500)
     end

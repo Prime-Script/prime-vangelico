@@ -4,7 +4,7 @@ Config = Config or {}
 Config.DoorLock = "nui"
 
 ------ / This will be the ID of the Door that you are using only use this section if you are using qb-doorlock
-Config.QBDoorID = 'Enter Door ID Here'
+Config.QBDoorID = 1 -- Enter the Door ID only if you're using qb-doorlock
 
 ------ / These are the only working Dispatch Systems that are in place for the alert, however more can be added!
 ------ / "Linden" | More Dispatch System's Coming Soon

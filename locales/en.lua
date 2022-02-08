@@ -41,6 +41,9 @@ local Translations = {
 
         -- Police Reboot Security System
         ["reboot_timer"] = "The System Will Reboot In 30 Seconds!",
+
+        -- Confirming The System Reboot
+        ["door_locked"] = "The System Has Rebooted, And The Door Has Been Locked!",
     },
 }
 

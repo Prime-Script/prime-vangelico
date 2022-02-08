@@ -20,3 +20,8 @@ client_scripts {
 server_scripts {
     'server/main.lua',
 }
+
+escrow_ignore {
+    'config.lua',
+    'locales/*.lua'
+}

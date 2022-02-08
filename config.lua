@@ -1,8 +1,11 @@
 Config = Config or {}
 
+------ / Door System | If you use qb-doorlock then use "qb" | If you use nui_doorlock then use "nui"
+Config.DoorLock = "nui"
+
 ------ / These are the only working Dispatch Systems that are in place for the alert, however more can be added!
------- / "Core" / "Linden" / "DP"
-Config.Dispatch = "LINDEN" ------ / THIS IS COMING SOON! NEED TO ADD THE OTHER EXPORTS
+------ / "Core" / "Linden" / "ERP" | More Dispatch System's Coming Soon
+Config.Dispatch = "ERP"
 
 ------ / Police Required To Start Heist
 Config.RequiredCops = 3
@@ -12,9 +15,6 @@ Config.Cooldown = 360
 
 ------ / Set CoolDown For VitrineCases (Prevents Spam Looting) | This Prevents people from "scuffing" inside and taking loot
 Config.Timeout = 90 * (60 * 1000)
-
------- / Set Door ID For NUI Door Lock | Currently Setup For Linden (More Coming Soon)
-Config.DispatchSystem = "LINDEN"
 
 ------ / Hack The Security System / Laptop Minigame
 Config.VangelicoTime = 15

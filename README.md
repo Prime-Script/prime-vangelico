@@ -7,15 +7,15 @@ PolyZone - https://github.com/qbcore-framework/PolyZone
 
 QB-Target - https://github.com/BerkieBb/qb-target
 
-Thermite Minigame - https://github.com/pushkart2/memorygame
+Thermite Minigame - This will be located in the assets folder
 
 Laptop Minigame - This will be located in the assets folder
 
 # Future Updates
 
-| Giving the police the ability to reboot the security system (No option to lock the doors unless the Police press [E])
+- Giving the police the ability to reboot the security system (No option to lock the doors unless the Police press [E])
 
-| Adding More Dispatch Systems (Will be adding Core, CDD and ERP_MDT when released)
+- Adding More Dispatch Systems (Will be adding Core, CDD and ERP_MDT when released)
 
 # Installation
 
@@ -50,7 +50,8 @@ Add usb_green to inventory / html / images
 The image will be found in assets
 
 # Problems Optimistion
-If you find problems or better way to optimise the script, feel free to create a PR. Please ensure that all PR's are tested and working!
+
+- If you find problems or better way to optimise the script, feel free to create a PR. Please ensure that all PR's are tested and working!
 
 # Locales System
 
@@ -58,6 +59,6 @@ English, Turkish, French
 
 Other Languages Coming Soon!
 
-[Discord](https://discord.gg/V6kFbN8UFp) | [Website](https://nocityrp.com) | [Tebex](https://nocity.tebex.io/)
+[Discord](https://discord.gg/GXxpdEX3c4) | [Tebex](https://prime-scripts.tebex.io/)
 
 # Author 'SocialPeely#4095'

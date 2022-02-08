@@ -19,7 +19,7 @@ Laptop Minigame - This will be located in the assets folder
 
 # Installation
 
-Create a file inside nui_doorlock / config, and add this inside the file (this will ensure the door is locked)
+- Create a file inside nui_doorlock / config, and add this inside the file (this will ensure the door is locked)
 ```
 Config.DoorList['doubledoor'] = {
 	authorizedJobs = { ['police']=0 }, -- ['ambulance']=0, ['bcso']=0
@@ -39,15 +39,15 @@ Config.DoorList['doubledoor'] = {
 }
 ```
 
-Add this item to qb-core / shared / items.lua
+- Add this item to qb-core / shared / items.lua
 
 ```
 ["usb_green"] 		 	     	 = {["name"] = "usb_green", 					["label"] = "Green USB", 				["weight"] = 5000, 	    ["type"] = "item", 		["image"] = "usb_green.png", 			["unique"] = false, 	["useable"] = true, 	["shouldClose"] = true,	   ["combinable"] = nil,   ["description"] = "What is this USB used for?"},
 ```
 
-Add usb_green to inventory / html / images
+- Add usb_green to inventory / html / images
 
-The image will be found in assets
+This will be located in the assets folder
 
 # Problems Optimistion
 
@@ -55,7 +55,7 @@ The image will be found in assets
 
 # Locales System
 
-English, Turkish, French
+- English, Turkish, French
 
 Other Languages Coming Soon!
 

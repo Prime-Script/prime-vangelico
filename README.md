@@ -57,4 +57,4 @@ Other Languages Coming Soon!
 
 [Discord](https://discord.gg/GXxpdEX3c4) | [Tebex](https://prime-scripts.tebex.io/)
 
-# Author 'SocialPeely#4095'
+# Credit to Lionh34rt (Orignal Script)

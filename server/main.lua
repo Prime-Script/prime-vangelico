@@ -102,6 +102,27 @@ AddEventHandler('qb-jewellery:server:policeAlert', function()
                     local dispatchData = {dispatchData = data, caller = 'Local', coords = vector3(-596.6, -283.97, 50.34)}
                     TriggerEvent('wf-alerts:svNotify', dispatchData)
                 else
+                    if Config.Dispatch == "Core" then
+                    local src = source
+                    local Ped = GetPlayerPed(src)
+                    local PlayerCoords = GetEntityCoords(Ped)
+                    local Player = QBCore.Functions.GetPlayer(src)
+                    local gender = "Male"
+                    if Player.PlayerData.charinfo.gender == 1 then
+                        gender = "Female"
+                    end
+                    TriggerEvent(
+                        "core_dispatch:addCall",
+                        "10-65", -- Change to your liking
+                        "Jewelry Store Robbery in Progress", -- Change to your liking
+                        {{icon = "fa-venus-mars", info = gender}}, -- FontAwesome Icon that shows in /dispatch
+                        {PlayerCoords[1], PlayerCoords[2], PlayerCoords[3]}, -- Grabs player position for alert, change if function already contains this.
+                        "police", -- Job receiving alert
+                        5000, -- Time alert stays on screen
+                        617, -- Blip Icon
+                        1 -- Blip Color
+                    )
+                else
                     TriggerClientEvent('QBCore:Notify', src, Lang:t("error.dispatch_system"), "error")
                 end
             end

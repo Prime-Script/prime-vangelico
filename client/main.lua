@@ -439,7 +439,7 @@ local function smashVitrine(k)
                 if Config.Locales == true then
                     QBCore.Functions.Notify(Lang:t("error.fingerprints"), "error")
                 else
-                    QBCore.Functions.Notify("You've left a fingerprint on the glass", "error")
+                    QBCore.Functions.Notify("You've Left Fingerprints On The Glass!", "error")
                 end
             end
         smashing = true

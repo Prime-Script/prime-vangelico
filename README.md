@@ -55,6 +55,6 @@ This will be located in the folder assets
 
 Other Languages Coming Soon!
 
-[Discord](https://discord.gg/GXxpdEX3c4) | [Tebex](https://prime-scripts.tebex.io/)
+[Discord](https://discord.gg/Z3mHA3eez9) | [Tebex](https://prime-scripts.tebex.io/)
 
 # Credit to Lionh34rt (Orignal Script)

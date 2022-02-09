@@ -31,16 +31,19 @@ local Translations = {
         ["smashed_already"] = "This Case Has Already Been Smashed!",
         ["distance_check"] = "You Are Not Close Enough To The Case!",
 
+        -- Police Reboot Security System
+        ["fingerprints"] = "You've Left Fingerprints On The Glass!",
+
         -- Door Check
         ["door_system"] = "This Door System Is Not Added!",
+
+        -- Police Reboot Security System
+        ["reboot_timer"] = "The System Will Reboot In 30 Seconds!",
     },
     success = {
         -- Vagelico Success
         ["security_success"] = "You Successfully Unlocked The Front Door!",
         ["camera_success"] = "You Successfully Disable The Cameras!",
-
-        -- Police Reboot Security System
-        ["reboot_timer"] = "The System Will Reboot In 30 Seconds!",
 
         -- Confirming The System Reboot
         ["door_locked"] = "The System Has Rebooted, And The Door Has Been Locked!",

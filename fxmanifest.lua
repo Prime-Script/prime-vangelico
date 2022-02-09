@@ -8,6 +8,7 @@ version '1.0.0'
 lua54 'yes'
 
 shared_scripts {
+    -- If your not using the latest version of QBCore, make sure you comment these two lines out | '@qb-core/shared/locale.lua', | 'locales/en.lua',
     '@qb-core/shared/locale.lua',
     'locales/en.lua', -- Change to the available languages | en.lua | fr.lua | tr.lua
     'config.lua'
@@ -19,9 +20,4 @@ client_scripts {
 
 server_scripts {
     'server/main.lua',
-}
-
-escrow_ignore {
-    'config.lua',
-    'locales/*.lua'
 }

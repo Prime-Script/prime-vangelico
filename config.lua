@@ -1,5 +1,8 @@
 Config = Config or {}
 
+------ / Set to false if you haven't updated your QBCore to the latest
+Config.Locales = true 
+ 
 ------ / Door System | If you use qb-doorlock then use "qb" | If you use nui_doorlock then use "nui"
 Config.DoorLock = "nui"
 

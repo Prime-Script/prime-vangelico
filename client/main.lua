@@ -32,7 +32,11 @@ AddEventHandler('thermite:UseThermite', function()
                                         -- Successfully Complete Thermite Game (Open Door)
                                         TriggerServerEvent('qb-doorlock:server:updateState', Config.QBDoorID, false)
                                     else
-                                        QBCore.Functions.Notify(Lang:t("error.door_system"), "error", 3500)
+                                        if Config.Locales == true then
+                                            QBCore.Functions.Notify(Lang:t("error.door_system"), "error", 3500)
+                                        else
+                                            QBCore.Functions.Notif('This Door System Is Not Added!', 'error')
+                                        end
                                     end
                                 end
 
@@ -41,18 +45,27 @@ AddEventHandler('thermite:UseThermite', function()
                                     ThermiteFailed()
                                 end)                        
                             else
-                                QBCore.Functions.Notify(Lang:t("error.wrong_equipment"), "error", 3500)
-                                --QBCore.Functions.Notify("You Don\'t Have The Correct Equipment!", "error")   
+                                if Config.Locales == true then
+                                    QBCore.Functions.Notify(Lang:t("error.wrong_equipment"), "error", 3500)
+                                else
+                                    QBCore.Functions.Notify("You Don\'t Have The Correct Equipment!", "error")
+                                end
                             end
                         end, "thermite")
                     else
-                        QBCore.Functions.Notify(Lang:t("error.cooldown"), "error", 3500)
-                        --QBCore.Functions.Notify("This Has Just Been Hit, You'll Have To Wait!", "error")
+                        if Config.Locales == true then
+                            QBCore.Functions.Notify(Lang:t("error.cooldown"), "error", 3500)
+                        else
+                            QBCore.Functions.Notify("This Has Just Been Hit, You'll Have To Wait!", "error")
+                        end
                     end      
                 end)
             else
-                QBCore.Functions.Notify(Lang:t("error.required_police"), "error", 3500)
-                --QBCore.Functions.Notify('Not Enough Police ('.. Config.RequiredCops ..') Required!', 'error')
+                if Config.Locales == true then
+                    QBCore.Functions.Notify(Lang:t("error.required_police"), "error", 3500)
+                else
+                    QBCore.Functions.Notify('Not Enough Police ('.. Config.RequiredCops ..') Required!', 'error')
+                end 
             end 
         end   
     else
@@ -127,7 +140,7 @@ AddEventHandler('hackinglaptop:UseHackinglaptop', function()
     local pos = GetEntityCoords(PlayerPedId())
     if #(pos - vector3(Config.JewelLocation["DisableCameras"].x, Config.JewelLocation["DisableCameras"].y,Config.JewelLocation["DisableCameras"].z)) < 1.5 then
         QBCore.Functions.TriggerCallback('QBCore:HasItem', function(hasItem)
-            --if Config.JewelLocation["ThermiteSecurity"].isDone then
+            if Config.JewelLocation["ThermiteSecurity"].isDone then
                 if hasItem then
                     TriggerEvent('inventory:client:requiredItems', requiredItems, false)
                     TriggerServerEvent("qb-jewellery:server:SetThermiteSecurityStatus", "isBusy", true)
@@ -154,14 +167,20 @@ AddEventHandler('hackinglaptop:UseHackinglaptop', function()
                         end
                     end)                        
                 else
+                    if Config.Locales == true then
                     QBCore.Functions.Notify(Lang:t("error.wrong_equipment"), "error", 3500)
-                    --QBCore.Functions.Notify("You Don\'t Have The Correct Equipment!", "error")   
+                    else
+                        QBCore.Functions.Notify("You Don\'t Have The Correct Equipment!", "error")
+                    end
                 end
 
-            --else
-                --QBCore.Functions.Notify(Lang:t("error.cooldown_disable"), "error", 3500)
-                --QBCore.Functions.Notify("You Haven't Hacked The Security System Yet!", "error")
-            --end
+            else
+                if Config.Locales == true then
+                    QBCore.Functions.Notify(Lang:t("error.cooldown_disable"), "error", 3500)
+                else
+                    QBCore.Functions.Notify("You Haven't Hacked The Security System Yet!", "error")
+                end
+            end
             
         end, "usb_green")
         
@@ -293,8 +312,11 @@ end
 
 -- Hack Security Fail
 function ThermiteFailed()
+    if Config.Locales == true then
     QBCore.Functions.Notify(Lang:t("error.security_fail"), "error", 3500)
-    --QBCore.Functions.Notify("You Failed To Hack The Security System!", "error")
+    else
+        QBCore.Functions.Notify("You Failed To Hack The Security System!", "error")
+    end
     TriggerServerEvent('qb-jewellery:server:policeAlert')
     PlaySound(-1, "Place_Prop_Fail", "DLC_Dmod_Prop_Editor_Sounds", 0, 0, 1)
     TriggerServerEvent("qb-jewellery:server:SetThermiteSecurityStatus", "isBusy", false)    
@@ -302,8 +324,11 @@ end
 
 -- Hack Security Successfully
 function ThermiteSuccess()
+    if Config.Locales == true then
     QBCore.Functions.Notify(Lang:t("success.security_success"), "success", 3500)
-    --QBCore.Functions.Notify("You Successfully Hacked The Security System!", "success")
+    else
+        QBCore.Functions.Notify("You Successfully Hacked The Security System!", "success")
+    end
     TriggerServerEvent('qb-jewellery:Server:BeginCooldown')
     TriggerServerEvent("QBCore:Server:RemoveItem", "thermite", 1)
     local pos = GetEntityCoords(PlayerPedId())
@@ -315,16 +340,22 @@ end
 
 -- Fail Disabled Cameras
 function SecurityFailed()
+    if Config.Locales == true then
     QBCore.Functions.Notify(Lang:t("error.camera_fail"), "error", 3500)
-    --QBCore.Functions.Notify("You Failed To Disabled The Security!", "error")
+    else
+        QBCore.Functions.Notify("You Failed To Disabled The Security!", "error")
+    end
     PlaySound(-1, "Place_Prop_Fail", "DLC_Dmod_Prop_Editor_Sounds", 0, 0, 1)
     TriggerServerEvent("qb-jewellery:server:SetCameraStatus", "isBusy", false)    
 end
 
 -- Successfully Disabling Cameras
 function SecuritySuccess()
-    QBCore.Functions.Notify(Lang:t("success.camera_success"), "success", 3500)
-    --QBCore.Functions.Notify("You Have Disabled The Security!", "success")
+    if Config.Locales == true then
+        QBCore.Functions.Notify(Lang:t("success.camera_success"), "success", 3500)
+    else
+        QBCore.Functions.Notify("You Have Disabled The Security!", "success")
+    end
     local pos = GetEntityCoords(PlayerPedId())
     TriggerServerEvent('qb-jewellery:server:policeAlert')
     TriggerServerEvent("QBCore:Server:RemoveItem", "usb_green", 1)
@@ -405,7 +436,11 @@ local function smashVitrine(k)
                 TriggerServerEvent("evidence:server:CreateFingerDrop", plyCoords)
             elseif math.random(1, 100) <= 5 and IsWearingHandshoes() then
                 TriggerServerEvent("evidence:server:CreateFingerDrop", plyCoords)
-                QBCore.Functions.Notify("You've left a fingerprint on the glass", "error")
+                if Config.Locales == true then
+                    QBCore.Functions.Notify(Lang:t("error.fingerprints"), "error")
+                else
+                    QBCore.Functions.Notify("You've left a fingerprint on the glass", "error")
+                end
             end
         smashing = true
         QBCore.Functions.Progressbar("smash_vitrine", "Grabbing Jewellery", Config.WhitelistedWeapons[pedWeapon]["timeOut"], false, true, {
@@ -439,10 +474,18 @@ local function smashVitrine(k)
                 end
             end)
         else
-            QBCore.Functions.Notify(Lang:t("error.weak_weapon"), "error", 3500)
+            if Config.Locales == true then
+                QBCore.Functions.Notify(Lang:t("error.weak_weapon"), "error", 3500)
+            else
+                QBCore.Functions.Notify("This Weapon Isn't Strong Enough!", "error", 3500)
+            end
         end
     else
-        QBCore.Functions.Notify(Lang:t("error.disable_security"), "error", 3500)
+        if Config.Locales == true then
+            QBCore.Functions.Notify(Lang:t("error.disable_security"), "error", 3500)
+        else
+            QBCore.Functions.Notify("You Need To Disable The Cameras!", "error", 3500)
+        end
     end
 end
 
@@ -450,17 +493,37 @@ end
 
 RegisterNetEvent('nc-vangelico:client:rebootsystem')
 AddEventHandler('nc-vangelico:client:rebootsystem', function()
-    QBCore.Functions.Notify(Lang:t("success.reboot_timer"), "success", 3500)
+    if Config.Locales == true then
+        QBCore.Functions.Notify(Lang:t("error.reboot_timer"), "error", 3500)
+    else
+        QBCore.Functions.Notify("The System Will Reboot In 30 Seconds!", "error", 3500)
+    end
+
     if Config.DoorLock == "nui" then
         Citizen.Wait(30000)
         TriggerServerEvent('nui_doorlock:server:updateState', "vangelicodoor", true, false, false, true)
-        QBCore.Functions.Notify(Lang:t("success.reboot_timer"), "success", 3500)
+
+        if Config.Locales == true then
+            QBCore.Functions.Notify(Lang:t("success.door_locked"), "success", 3500)
+        else
+            QBCore.Functions.Notify("The System Has Rebooted, And The Door Has Been Locked!", "success", 3500)
+        end
+
     else if Config.DoorLock == "qb" then
         Citizen.Wait(30000)
         TriggerServerEvent('qb-doorlock:server:updateState', Config.QBDoorID, true)
-        QBCore.Functions.Notify(Lang:t("success.door_locked"), "success", 3500)
+
+        if Config.Locales == true then
+            QBCore.Functions.Notify(Lang:t("success.door_locked"), "success", 3500)
+        else
+            QBCore.Functions.Notify("The System Has Rebooted, And The Door Has Been Locked!", "success", 3500)
+        end
     else
-        QBCore.Functions.Notify(Lang:t("error.door_system"), "error", 3500)
+        if Config.Locales == true then
+            QBCore.Functions.Notify(Lang:t("error.door_system"), "error", 3500)
+        else
+            QBCore.Functions.Notify("This Door System Is Not Added!", "error", 3500)
+        end
     end
 end
 

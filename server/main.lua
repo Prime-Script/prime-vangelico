@@ -101,8 +101,7 @@ AddEventHandler('qb-jewellery:server:policeAlert', function()
                     blipSprite = 487, blipColour = 3, blipScale = 1.2}
                     local dispatchData = {dispatchData = data, caller = 'Local', coords = vector3(-596.6, -283.97, 50.34)}
                     TriggerEvent('wf-alerts:svNotify', dispatchData)
-                else
-                    if Config.Dispatch == "Core" then
+                elseif Config.Dispatch == "Core" then
                     local src = source
                     local Ped = GetPlayerPed(src)
                     local PlayerCoords = GetEntityCoords(Ped)

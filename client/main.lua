@@ -35,7 +35,7 @@ AddEventHandler('thermite:UseThermite', function()
                                         if Config.Locales == true then
                                             QBCore.Functions.Notify(Lang:t("error.door_system"), "error", 3500)
                                         else
-                                            QBCore.Functions.Notif('This Door System Is Not Added!', 'error')
+                                            QBCore.Functions.Notify('This Door System Is Not Added!', 'error')
                                         end
                                     end
                                 end

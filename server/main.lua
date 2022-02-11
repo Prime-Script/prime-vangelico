@@ -12,7 +12,7 @@ QBCore.Functions.CreateUseableItem("thermite", function(source, item)
 -- Second Item Needed
 QBCore.Functions.CreateUseableItem("usb_green", function(source, item)
     local Player = QBCore.Functions.GetPlayer(source)
-    TriggerClientEvent('hackinglaptop:UseHackinglaptop',source)
+    TriggerClientEvent('hackinglaptop:UseHackinglaptop', source)
  end)
 
 RegisterServerEvent("Peely-particleserver")

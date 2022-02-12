@@ -12,17 +12,17 @@ AddEventHandler('thermite:UseThermite', function()
         local pos = GetEntityCoords(PlayerPedId())
         if #(pos - vector3(Config.JewelLocation["ThermiteSecurity"].x, Config.JewelLocation["ThermiteSecurity"].y,Config.JewelLocation["ThermiteSecurity"].z)) < 1.0 then
             if CurrentCops >= Config.RequiredCops then
-                QBCore.Functions.TriggerCallback("prime-vangelico:Callback:Cooldown",function(isCooldown)
+                QBCore.Functions.TriggerCallback("qb-jewellery:Callback:Cooldown",function(isCooldown)
                     if not isCooldown then
                         QBCore.Functions.TriggerCallback('QBCore:HasItem', function(hasItem)
                             if hasItem then
                                 TriggerEvent('inventory:client:requiredItems', requiredItems, false)
-                                TriggerServerEvent("prime-vangelico:SetHackSecurityStatus", "isBusy", true)
+                                TriggerServerEvent("qb-jewellery:server:SetHackSecurityStatus", "isBusy", true)
                                 exports["memorygame"]:thermiteminigame(Config.CorrectBlocks, Config.IncorrectBlocks, Config.TimeToShow, Config.TimeToLose,
                                 function() -- Successfully Disable Cameras
                                     ThermiteAnimation() 
                                     ThermiteSuccess()
-                                    TriggerServerEvent('prime-vangelico:BeginCooldown')
+                                    TriggerServerEvent('qb-jewellery:BeginCooldown')
 
                                     -- Door Dependency (NUI or QB)
                                     if Config.DoorLock == "nui" then
@@ -143,7 +143,7 @@ AddEventHandler('hackinglaptop:UseHackinglaptop', function()
             if Config.JewelLocation["ThermiteSecurity"].isDone then
                 if hasItem then
                     TriggerEvent('inventory:client:requiredItems', requiredItems, false)
-                    TriggerServerEvent("prime-vangelico:SetThermiteSecurityStatus", "isBusy", true)
+                    TriggerServerEvent("qb-jewellery:server:SetThermiteSecurityStatus", "isBusy", true)
                     QBCore.Functions.Progressbar("power_hack", "Connecting...", math.random(5500, 5600), false, true, {
                            useWhileDead = false,
                            canCancel = false,
@@ -249,25 +249,25 @@ AddEventHandler('police:SetCopCount', function(amount)
     CurrentCops = amount
 end)
 
-RegisterNetEvent('QBCore:OnPlayerUnload')
-AddEventHandler('QBCore:OnPlayerUnload', function()
+RegisterNetEvent('QBCore:Client:OnPlayerUnload')
+AddEventHandler('QBCore:Client:OnPlayerUnload', function()
     isLoggedIn = false
 end)
 
-RegisterNetEvent('QBCore:OnPlayerLoaded')
-AddEventHandler('QBCore:OnPlayerLoaded', function()
+RegisterNetEvent('QBCore:Client:OnPlayerLoaded')
+AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
     isLoggedIn = true
-    TriggerServerEvent("prime-vangelico:SetJewelLocations")
+    TriggerServerEvent("qb-jewellery:server:SetJewelLocations")
 end)
 
-RegisterNetEvent('prime-vangelico:ConfigLocs')
-AddEventHandler('prime-vangelico:ConfigLocs', function(list)
+RegisterNetEvent('qb-jewellery:client:ConfigLocs')
+AddEventHandler('qb-jewellery:client:ConfigLocs', function(list)
     Config.JewelLocation = list
 end)
 
 -- Hacking Security System!
-RegisterNetEvent('prime-vangelico:SetThermiteSecurityStatus')
-AddEventHandler('prime-vangelico:SetThermiteSecurityStatus', function(stateType, state)
+RegisterNetEvent('qb-jewellery:client:SetThermiteSecurityStatus')
+AddEventHandler('qb-jewellery:client:SetThermiteSecurityStatus', function(stateType, state)
     if stateType == "isBusy" then
         Config.JewelLocation["ThermiteSecurity"].isBusy = state
         print("SECURITY IS BUSY")
@@ -278,8 +278,8 @@ AddEventHandler('prime-vangelico:SetThermiteSecurityStatus', function(stateType,
 end)
 
 -- Disabling The Cameras
-RegisterNetEvent('prime-vangelico:SetCameraStatus')
-AddEventHandler('prime-vangelico:SetCameraStatus', function(stateType, state)
+RegisterNetEvent('qb-jewellery:client:SetCameraStatus')
+AddEventHandler('qb-jewellery:client:SetCameraStatus', function(stateType, state)
     if stateType == "isBusy" then
         Config.JewelLocation["DisableCameras"].isBusy = state
         print("CAMERAS ARE BUSY")
@@ -290,6 +290,7 @@ AddEventHandler('prime-vangelico:SetCameraStatus', function(stateType, state)
 end)
 
 -- Functions
+
 
 function SecuritySuccessAnim()
     NetworkStartSynchronisedScene(netScene3)
@@ -316,10 +317,9 @@ function ThermiteFailed()
     else
         QBCore.Functions.Notify("You Failed To Hack The Security System!", "error")
     end
-    TriggerServerEvent('prime-vangelico:policeAlert')
+    TriggerServerEvent('qb-jewellery:server:policeAlert')
     PlaySound(-1, "Place_Prop_Fail", "DLC_Dmod_Prop_Editor_Sounds", 0, 0, 1)
-    TriggerServerEvent("prime-vangelico:SetThermiteSecurityStatus", "isBusy", false)   
-    TriggerServerEvent("QBCore:Server:RemoveItem", "thermite", 1)
+    TriggerServerEvent("qb-jewellery:server:SetThermiteSecurityStatus", "isBusy", false)    
 end
 
 -- Hack Security Successfully
@@ -329,12 +329,12 @@ function ThermiteSuccess()
     else
         QBCore.Functions.Notify("You Successfully Hacked The Security System!", "success")
     end
-    TriggerServerEvent('prime-vangelico:BeginCooldown')
+    TriggerServerEvent('qb-jewellery:Server:BeginCooldown')
     TriggerServerEvent("QBCore:Server:RemoveItem", "thermite", 1)
     local pos = GetEntityCoords(PlayerPedId())
     if #(pos - vector3(Config.JewelLocation["ThermiteSecurity"].x, Config.JewelLocation["ThermiteSecurity"].y,Config.JewelLocation["ThermiteSecurity"].z)) < 1.5 then
-        TriggerServerEvent("prime-vangelico:SetThermiteSecurityStatus", "isDone", true)
-        TriggerServerEvent("prime-vangelico:SetThermiteSecurityStatus", "isBusy", false)  
+        TriggerServerEvent("qb-jewellery:server:SetThermiteSecurityStatus", "isDone", true)
+        TriggerServerEvent("qb-jewellery:server:SetThermiteSecurityStatus", "isBusy", false)  
     end
 end
 
@@ -346,7 +346,7 @@ function SecurityFailed()
         QBCore.Functions.Notify("You Failed To Disabled The Security!", "error")
     end
     PlaySound(-1, "Place_Prop_Fail", "DLC_Dmod_Prop_Editor_Sounds", 0, 0, 1)
-    TriggerServerEvent("prime-vangelico:SetCameraStatus", "isBusy", false)   
+    TriggerServerEvent("qb-jewellery:server:SetCameraStatus", "isBusy", false)    
 end
 
 -- Successfully Disabling Cameras
@@ -357,11 +357,11 @@ function SecuritySuccess()
         QBCore.Functions.Notify("You Have Disabled The Security!", "success")
     end
     local pos = GetEntityCoords(PlayerPedId())
-    TriggerServerEvent('prime-vangelico:policeAlert')
+    TriggerServerEvent('qb-jewellery:server:policeAlert')
     TriggerServerEvent("QBCore:Server:RemoveItem", "usb_green", 1)
     if #(pos - vector3(Config.JewelLocation["DisableCameras"].x, Config.JewelLocation["DisableCameras"].y,Config.JewelLocation["DisableCameras"].z)) < 1.5 then
-        TriggerServerEvent("prime-vangelico:SetCameraStatus", "isDone", true)
-        TriggerServerEvent("prime-vangelico:SetCameraStatus", "isBusy", false)  
+        TriggerServerEvent("qb-jewellery:server:SetCameraStatus", "isDone", true)
+        TriggerServerEvent("qb-jewellery:server:SetCameraStatus", "isBusy", false)  
     end
 end
 
@@ -449,18 +449,18 @@ local function smashVitrine(k)
                 disableMouse = false,
                 disableCombat = true,
             }, {}, {}, {}, function() -- Done
-                TriggerServerEvent('prime-vangelico:setVitrineState', "isOpened", true, k)
-                TriggerServerEvent('prime-vangelico:setVitrineState', "isBusy", false, k)
-                TriggerServerEvent('prime-vangelico:vitrineReward')
-                TriggerServerEvent('prime-vangelico:setTimeout')
+                TriggerServerEvent('qb-jewellery:server:setVitrineState', "isOpened", true, k)
+                TriggerServerEvent('qb-jewellery:server:setVitrineState', "isBusy", false, k)
+                TriggerServerEvent('qb-jewellery:server:vitrineReward')
+                TriggerServerEvent('qb-jewellery:server:setTimeout')
                 smashing = false
                 TaskPlayAnim(ped, animDict, "exit", 3.0, 3.0, -1, 2, 0, 0, 0, 0)
             end, function() -- Cancel
-                TriggerServerEvent('prime-vangelico:setVitrineState', "isBusy", false, k)
+                TriggerServerEvent('qb-jewellery:server:setVitrineState', "isBusy", false, k)
                 smashing = false
                 TaskPlayAnim(ped, animDict, "exit", 3.0, 3.0, -1, 2, 0, 0, 0, 0)
             end)
-            TriggerServerEvent('prime-vangelico:setVitrineState', "isBusy", true, k)
+            TriggerServerEvent('qb-jewellery:server:setVitrineState', "isBusy", true, k)
 
             CreateThread(function()
                 while smashing do
@@ -491,8 +491,8 @@ end
 
 ------ / Event for police to reboot alarm system! This will lock the doors after 30 seconds
 
-RegisterNetEvent('nc-vangelico:rebootsystem')
-AddEventHandler('nc-vangelico:rebootsystem', function()
+RegisterNetEvent('nc-vangelico:client:rebootsystem')
+AddEventHandler('nc-vangelico:client:rebootsystem', function()
     if Config.Locales == true then
         QBCore.Functions.Notify(Lang:t("error.reboot_timer"), "error", 3500)
     else
@@ -501,7 +501,7 @@ AddEventHandler('nc-vangelico:rebootsystem', function()
 
     if Config.DoorLock == "nui" then
         Citizen.Wait(30000)
-        TriggerServerEvent('nui_doorlock:updateState', "vangelicodoor", true, false, false, true)
+        TriggerServerEvent('nui_doorlock:server:updateState', "vangelicodoor", true, false, false, true)
 
         if Config.Locales == true then
             QBCore.Functions.Notify(Lang:t("success.door_locked"), "success", 3500)
@@ -511,7 +511,7 @@ AddEventHandler('nc-vangelico:rebootsystem', function()
 
     else if Config.DoorLock == "qb" then
         Citizen.Wait(30000)
-        TriggerServerEvent('qb-doorlock:updateState', Config.QBDoorID, true)
+        TriggerServerEvent('qb-doorlock:server:updateState', Config.QBDoorID, true)
 
         if Config.Locales == true then
             QBCore.Functions.Notify(Lang:t("success.door_locked"), "success", 3500)
@@ -531,7 +531,7 @@ end)
 
 ------ / Events / Done & Finished
 
-RegisterNetEvent('prime-vangelico:setVitrineState', function(stateType, state, k)
+RegisterNetEvent('qb-jewellery:client:setVitrineState', function(stateType, state, k)
     Config.Locations[k][stateType] = state
 end)
 
@@ -577,7 +577,7 @@ CreateThread(function()
             },
             {
                 type = "client",
-                event = "nc-vangelico:rebootsystem",
+                event = "nc-vangelico:client:rebootsystem",
                 icon = 'fas fa-power-off',
                 label = 'Reboot Security System',
                 job = { ["police"] = 0 }

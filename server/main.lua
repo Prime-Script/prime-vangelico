@@ -12,7 +12,7 @@ QBCore.Functions.CreateUseableItem("thermite", function(source, item)
 -- Second Item Needed
 QBCore.Functions.CreateUseableItem("usb_green", function(source, item)
     local Player = QBCore.Functions.GetPlayer(source)
-    TriggerClientEvent('hackinglaptop:UseHackinglaptop', source)
+    TriggerClientEvent('hackinglaptop:UseHackinglaptop',source)
  end)
 
 RegisterServerEvent("Peely-particleserver")
@@ -25,15 +25,15 @@ AddEventHandler("Peely-particleserversec", function(method)
     TriggerClientEvent("Peely-ptfxparticlesec", -1, method)
 end)
 
-RegisterServerEvent('prime-vangelico:SetJewelLocations')
-AddEventHandler('prime-vangelico:SetJewelLocations', function()
+RegisterServerEvent('qb-jewellery:server:SetJewelLocations')
+AddEventHandler('qb-jewellery:server:SetJewelLocations', function()
     local src = source 
-    TriggerClientEvent("prime-vangelico:SetJewelLocations", src, Config.JewelLocation)
+    TriggerClientEvent("qb-jewellery:server:SetJewelLocations", src, Config.JewelLocation)
 end)
 
 -- Register Cool Down Events For Locations
-RegisterServerEvent('prime-vangelico:BeginCooldown')
-AddEventHandler('prime-vangelico:BeginCooldown', function()
+RegisterServerEvent('qb-jewellery:Server:BeginCooldown')
+AddEventHandler('qb-jewellery:Server:BeginCooldown', function()
     Cooldown = true
     local timer = Config.Cooldown * 60000
     while timer > 0 do
@@ -46,7 +46,7 @@ AddEventHandler('prime-vangelico:BeginCooldown', function()
 end)
 
 -- CallBack For CoolDown
-QBCore.Functions.CreateCallback("prime-vangelico:Callback:Cooldown",function(source, cb)
+QBCore.Functions.CreateCallback("qb-jewellery:Callback:Cooldown",function(source, cb)
     if Cooldown then
         cb(true)
     else
@@ -56,7 +56,7 @@ QBCore.Functions.CreateCallback("prime-vangelico:Callback:Cooldown",function(sou
 end)
 
 -- Callback For Cops
-QBCore.Functions.CreateCallback('prime-vangelico:getCops', function(source, cb)
+QBCore.Functions.CreateCallback('qb-jewellery:server:getCops', function(source, cb)
 	local amount = 0
     for k, v in pairs(QBCore.Functions.GetQBPlayers()) do
         if v.PlayerData.job.name == "police" and v.PlayerData.job.onduty then
@@ -67,36 +67,36 @@ QBCore.Functions.CreateCallback('prime-vangelico:getCops', function(source, cb)
 end)
 
 -- Hack On Roof Of Vangelico
-RegisterServerEvent('prime-vangelico:SetThermiteSecurityStatus')
-AddEventHandler('prime-vangelico:SetThermiteSecurityStatus', function(stateType, state)
+RegisterServerEvent('qb-jewellery:server:SetThermiteSecurityStatus')
+AddEventHandler('qb-jewellery:server:SetThermiteSecurityStatus', function(stateType, state)
     if stateType == "isBusy" then
         Config.JewelLocation["ThermiteSecurity"].isBusy = state
     elseif stateType == "isDone" then
         Config.JewelLocation["ThermiteSecurity"].isDone = state
     end
-    TriggerClientEvent('prime-vangelico:client:SetThermiteSecurityStatus', -1, stateType, state)
-    TriggerEvent('qb-scoreboard:server:SetActivityBusy', "jewellery", true)
+    TriggerClientEvent('qb-jewellery:client:SetThermiteSecurityStatus', -1, stateType, state)
+    TriggerEvent('qb-scoreboard:server:SetActivityBusy', "jewellery", false)
 end)
 
 -- Disbaled Cameras In Vangelico
-RegisterServerEvent('prime-vangelico:SetCameraStatus')
-AddEventHandler('prime-vangelico:SetCameraStatus', function(stateType, state)
+RegisterServerEvent('qb-jewellery:server:SetCameraStatus')
+AddEventHandler('qb-jewellery:server:SetCameraStatus', function(stateType, state)
     if stateType == "isBusy" then
         Config.JewelLocation["DisableCameras"].isBusy = state
     elseif stateType == "isDone" then
         Config.JewelLocation["DisableCameras"].isDone = state
     end
-    TriggerClientEvent('prime-vangelico:client:SetCameraStatus', -1, stateType, state)
+    TriggerClientEvent('qb-jewellery:client:SetCameraStatus', -1, stateType, state)
 end)
 
-RegisterServerEvent('prime-vangelico:policeAlert')
-AddEventHandler('prime-vangelico:policeAlert', function()
+RegisterServerEvent('qb-jewellery:server:policeAlert')
+AddEventHandler('qb-jewellery:server:policeAlert', function()
     local src = source
     for k, v in pairs(QBCore.Functions.GetPlayers()) do
         local Player = QBCore.Functions.GetPlayer(v)
         if Player ~= nil then 
             if (Player.PlayerData.job.name == "police") then
-                if Config.Dispatch == "linden" then
+                if Config.Dispatch == "Linden" then
                     local data = {displayCode = '10-11B', description = 'System Failure', isImportant = 0, recipientList = {'police'}, length = '5000', infoM = 'fas fa-bolt', info = 'Suspicious Activity At Vangelico', 
                     blipSprite = 487, blipColour = 3, blipScale = 1.2}
                     local dispatchData = {dispatchData = data, caller = 'Local', coords = vector3(-596.6, -283.97, 50.34)}
@@ -112,7 +112,7 @@ end)
 
 -- Callback
 
-QBCore.Functions.CreateCallback('prime-vangelico:getCops', function(source, cb)
+QBCore.Functions.CreateCallback('qb-jewellery:server:getCops', function(source, cb)
 	local amount = 0
     for k, v in pairs(QBCore.Functions.GetQBPlayers()) do
         if v.PlayerData.job.name == "police" and v.PlayerData.job.onduty then
@@ -124,12 +124,12 @@ end)
 
 -- Events
 
-RegisterNetEvent('prime-vangelico:setVitrineState', function(stateType, state, k)
+RegisterNetEvent('qb-jewellery:server:setVitrineState', function(stateType, state, k)
     Config.Locations[k][stateType] = state
-    TriggerClientEvent('prime-vangelico:client:setVitrineState', -1, stateType, state, k)
+    TriggerClientEvent('qb-jewellery:client:setVitrineState', -1, stateType, state, k)
 end)
 
-RegisterNetEvent('prime-vangelico:vitrineReward', function()
+RegisterNetEvent('qb-jewellery:server:vitrineReward', function()
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local otherchance = math.random(1, 4)
@@ -147,7 +147,7 @@ RegisterNetEvent('prime-vangelico:vitrineReward', function()
     end
 end)
 
-QBCore.Functions.CreateCallback('prime-vangelico:setTimeout', function(source, cb)
+QBCore.Functions.CreateCallback('qb-jewellery:server:setTimeout', function(source, cb)
 	if not timeOut then
         timeOut = true
         Citizen.CreateThread(function()
@@ -155,8 +155,8 @@ QBCore.Functions.CreateCallback('prime-vangelico:setTimeout', function(source, c
 
             for k, v in pairs(Config.Locations) do
                 Config.Locations[k]["isOpened"] = false
-                TriggerClientEvent('prime-vangelico:client:setVitrineState', -1, 'isOpened', false, k)
-                TriggerClientEvent('prime-vangelico:client:setAlertState', -1, false)
+                TriggerClientEvent('qb-jewellery:client:setVitrineState', -1, 'isOpened', false, k)
+                TriggerClientEvent('qb-jewellery:client:setAlertState', -1, false)
             end
             timeOut = false
             alarmTriggered = false

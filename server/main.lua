@@ -89,27 +89,6 @@ AddEventHandler('qb-jewellery:server:SetCameraStatus', function(stateType, state
     TriggerClientEvent('qb-jewellery:client:SetCameraStatus', -1, stateType, state)
 end)
 
-RegisterServerEvent('qb-jewellery:server:policeAlert')
-AddEventHandler('qb-jewellery:server:policeAlert', function()
-    local src = source
-    for k, v in pairs(QBCore.Functions.GetPlayers()) do
-        local Player = QBCore.Functions.GetPlayer(v)
-        if Player ~= nil then 
-            if (Player.PlayerData.job.name == "police") then
-                if Config.Dispatch == "Linden" then
-                    local data = {displayCode = '10-11B', description = 'System Failure', isImportant = 0, recipientList = {'police'}, length = '5000', infoM = 'fas fa-bolt', info = 'Suspicious Activity At Vangelico', 
-                    blipSprite = 487, blipColour = 3, blipScale = 1.2}
-                    local dispatchData = {dispatchData = data, caller = 'Local', coords = vector3(-596.6, -283.97, 50.34)}
-                    TriggerEvent('wf-alerts:svNotify', dispatchData)
-                else
-                    TriggerClientEvent('QBCore:Notify', src, Lang:t("error.dispatch_system"), "error")
-                end
-            end
-        end
-    end
-end)
-
-
 -- Callback
 
 QBCore.Functions.CreateCallback('qb-jewellery:server:getCops', function(source, cb)

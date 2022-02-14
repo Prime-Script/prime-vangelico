@@ -12,10 +12,6 @@ Config.DoorLock = 'nui'
 
 Config.QBDoorID = 1 -- Enter the Door ID only if you're using qb-doorlock
 
------- / These are the only working Dispatch Systems that are in place for the alert, however more can be added!
-
-Config.Dispatch = 'linden' -- 'linden' | 'core' | More on the way
-
 ------ / Police Required To Start Heist
 Config.RequiredCops = 3
 

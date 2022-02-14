@@ -317,7 +317,6 @@ function ThermiteFailed()
     else
         QBCore.Functions.Notify("You Failed To Hack The Security System!", "error")
     end
-    TriggerServerEvent('qb-jewellery:server:policeAlert')
     PlaySound(-1, "Place_Prop_Fail", "DLC_Dmod_Prop_Editor_Sounds", 0, 0, 1)
     TriggerServerEvent("qb-jewellery:server:SetThermiteSecurityStatus", "isBusy", false)    
 end
@@ -357,7 +356,6 @@ function SecuritySuccess()
         QBCore.Functions.Notify("You Have Disabled The Security!", "success")
     end
     local pos = GetEntityCoords(PlayerPedId())
-    TriggerServerEvent('qb-jewellery:server:policeAlert')
     TriggerServerEvent("QBCore:Server:RemoveItem", "usb_green", 1)
     if #(pos - vector3(Config.JewelLocation["DisableCameras"].x, Config.JewelLocation["DisableCameras"].y,Config.JewelLocation["DisableCameras"].z)) < 1.5 then
         TriggerServerEvent("qb-jewellery:server:SetCameraStatus", "isDone", true)
@@ -573,7 +571,7 @@ CreateThread(function()
                 type = "client",
                 event = "hackinglaptop:UseHackinglaptop",
                 icon = 'fab fa-usb',
-                label = 'Connect USB',
+                label = 'Connect Laptop',
             },
             {
                 type = "client",

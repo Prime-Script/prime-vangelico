@@ -1,5 +1,9 @@
 # Vangelico Heist For QBCore
 
+# Disclaimer
+
+- I have removed the police alert! Therefore you will have to add your own, I won't be offering support on this section.
+
 # Requirements
 - QB-Framework: https://github.com/qbcore-framework/qb-core
 

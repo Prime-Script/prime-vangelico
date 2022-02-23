@@ -61,6 +61,8 @@ Other Languages Coming Soon!
 
 [Discord](https://discord.gg/Z3mHA3eez9) | [Tebex](https://prime-scripts.tebex.io/)
 
+# License
+
 This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0
 International License][cc-by-nc-sa].
 

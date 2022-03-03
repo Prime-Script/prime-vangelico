@@ -1,5 +1,9 @@
 Config = Config or {}
 
+------ / Custom Core Settings | DO NOT TOUCH IF YOU HAVE THE LATEST CORE \ ------
+
+Config.Version == "new"
+
 ------ / Set to false if you haven't updated your QBCore to the latest
 
 Config.Locales = true 

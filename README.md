@@ -63,8 +63,7 @@ Other Languages Coming Soon!
 
 # License
 
-This script provided by Prime Scripts, is under the protection of [CCANC 4.0
-International License][cc-by-nc-sa].
+This script provided by Prime Scripts, is under the protection of [Attribution-NonCommercial-ShareAlike 4.0 International License][cc-by-nc-sa].
 
 [![CC BY-NC-SA 4.0][cc-by-nc-sa-image]][cc-by-nc-sa]
 

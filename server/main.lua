@@ -28,25 +28,21 @@ QBCore.Functions.CreateUseableItem("usb_green", function(source, item)
     TriggerClientEvent('hackinglaptop:UseHackinglaptop',source)
  end)
 
-RegisterServerEvent("Peely-particleserver")
-AddEventHandler("Peely-particleserver", function(method)
+RegisterServerEvent("Peely-particleserver", function(method)
     TriggerClientEvent("Peely-ptfxparticle", -1, method)
 end)
 
-RegisterServerEvent("Peely-particleserversec")
-AddEventHandler("Peely-particleserversec", function(method)
+RegisterServerEvent("Peely-particleserversec", function(method)
     TriggerClientEvent("Peely-ptfxparticlesec", -1, method)
 end)
 
-RegisterServerEvent('qb-jewellery:server:SetJewelLocations')
-AddEventHandler('qb-jewellery:server:SetJewelLocations', function()
+RegisterServerEvent('qb-jewellery:server:SetJewelLocations', function()
     local src = source 
     TriggerClientEvent("qb-jewellery:server:SetJewelLocations", src, Config.JewelLocation)
 end)
 
 -- Register Cool Down Events For Locations
-RegisterServerEvent('qb-jewellery:Server:BeginCooldown')
-AddEventHandler('qb-jewellery:Server:BeginCooldown', function()
+RegisterServerEvent('qb-jewellery:Server:BeginCooldown', function()
     Cooldown = true
     local timer = Config.Cooldown * 60000
     while timer > 0 do
@@ -80,8 +76,7 @@ QBCore.Functions.CreateCallback('qb-jewellery:server:getCops', function(source, 
 end)
 
 -- Hack On Roof Of Vangelico
-RegisterServerEvent('qb-jewellery:server:SetThermiteSecurityStatus')
-AddEventHandler('qb-jewellery:server:SetThermiteSecurityStatus', function(stateType, state)
+RegisterServerEvent('qb-jewellery:server:SetThermiteSecurityStatus', function(stateType, state)
     if stateType == "isBusy" then
         Config.JewelLocation["ThermiteSecurity"].isBusy = state
     elseif stateType == "isDone" then
@@ -92,8 +87,7 @@ AddEventHandler('qb-jewellery:server:SetThermiteSecurityStatus', function(stateT
 end)
 
 -- Disbaled Cameras In Vangelico
-RegisterServerEvent('qb-jewellery:server:SetCameraStatus')
-AddEventHandler('qb-jewellery:server:SetCameraStatus', function(stateType, state)
+RegisterServerEvent('qb-jewellery:server:SetCameraStatus', function(stateType, state)
     if stateType == "isBusy" then
         Config.JewelLocation["DisableCameras"].isBusy = state
     elseif stateType == "isDone" then
@@ -124,17 +118,15 @@ end)
 RegisterNetEvent('qb-jewellery:server:vitrineReward', function()
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-    local otherchance = math.random(1, 4)
-    local odd = math.random(1, 4)
-
-    if otherchance == odd then
-        local item = math.random(1, #Config.VitrineRewards)
-        local amount = math.random(Config.VitrineRewards[item]["amount"]["min"], Config.VitrineRewards[item]["amount"]["max"])
-        if Player.Functions.AddItem(Config.VitrineRewards[item]["item"], amount) then
-            TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[Config.VitrineRewards[item]["item"]], 'add')
-        else
+    local item = math.random(1, #Config.VitrineRewards)
+    local amount = math.random(Config.VitrineRewards[item]["amount"]["min"], Config.VitrineRewards[item]["amount"]["max"])
+    if Player.Functions.AddItem(Config.VitrineRewards[item]["item"], amount) then
+        TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items[Config.VitrineRewards[item]["item"]], 'add')
+    else
+        if Config.Locales == true then
             TriggerClientEvent('QBCore:Notify', src, Lang:t("error.pockets_full"), "error")
-            --TriggerClientEvent('QBCore:Notify', src, 'You Can\'t Carry Anymore!', 'error')
+        else
+            TriggerClientEvent('QBCore:Notify', src, 'You Can\'t Carry Anymore!', 'error')
         end
     end
 end)

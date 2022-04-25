@@ -3,11 +3,10 @@ local CurrentCops = -0
 local copsCalled = false
 local requiredItems = {}
 local isLoggedIn = true
-PlayerJob = {}
+local PlayerJob = {}
 
 -- Thermite The Security System On Top Of The Roof
-RegisterNetEvent('thermite:UseThermite')
-AddEventHandler('thermite:UseThermite', function()
+RegisterNetEvent('thermite:UseThermite', function()
     if QBCore ~= nil and isLoggedIn then
         local pos = GetEntityCoords(PlayerPedId())
         if #(pos - vector3(Config.JewelLocation["ThermiteSecurity"].x, Config.JewelLocation["ThermiteSecurity"].y,Config.JewelLocation["ThermiteSecurity"].z)) < 5.0 then
@@ -74,8 +73,7 @@ AddEventHandler('thermite:UseThermite', function()
 end)
 
 -- Effect for Thermite
-RegisterNetEvent("Peely-ptfxparticle")
-AddEventHandler("Peely-ptfxparticle", function(method)
+RegisterNetEvent("Peely-ptfxparticle", function(method)
     local ptfx
 
     RequestNamedPtfxAsset("scr_ornate_heist")
@@ -135,8 +133,7 @@ function ThermiteAnimation()
 end
 
 -- Disable the Security System
-RegisterNetEvent('hackinglaptop:UseHackinglaptop')
-AddEventHandler('hackinglaptop:UseHackinglaptop', function()
+RegisterNetEvent('hackinglaptop:UseHackinglaptop', function()
     local pos = GetEntityCoords(PlayerPedId())
     if #(pos - vector3(Config.JewelLocation["DisableCameras"].x, Config.JewelLocation["DisableCameras"].y,Config.JewelLocation["DisableCameras"].z)) < 5.0 then
         QBCore.Functions.TriggerCallback('QBCore:HasItem', function(hasItem)
@@ -244,30 +241,25 @@ end
 
 ------- / Trigger Status
 
-RegisterNetEvent('police:SetCopCount')
-AddEventHandler('police:SetCopCount', function(amount)
+RegisterNetEvent('police:SetCopCount', function(amount)
     CurrentCops = amount
 end)
 
-RegisterNetEvent('QBCore:Client:OnPlayerUnload')
-AddEventHandler('QBCore:Client:OnPlayerUnload', function()
+RegisterNetEvent('QBCore:Client:OnPlayerUnload', function()
     isLoggedIn = false
 end)
 
-RegisterNetEvent('QBCore:Client:OnPlayerLoaded')
-AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
+RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     isLoggedIn = true
     TriggerServerEvent("qb-jewellery:server:SetJewelLocations")
 end)
 
-RegisterNetEvent('qb-jewellery:client:ConfigLocs')
-AddEventHandler('qb-jewellery:client:ConfigLocs', function(list)
+RegisterNetEvent('qb-jewellery:client:ConfigLocs', function(list)
     Config.JewelLocation = list
 end)
 
 -- Hacking Security System!
-RegisterNetEvent('qb-jewellery:client:SetThermiteSecurityStatus')
-AddEventHandler('qb-jewellery:client:SetThermiteSecurityStatus', function(stateType, state)
+RegisterNetEvent('qb-jewellery:client:SetThermiteSecurityStatus', function(stateType, state)
     if stateType == "isBusy" then
         Config.JewelLocation["ThermiteSecurity"].isBusy = state
         print("SECURITY IS BUSY")
@@ -278,8 +270,7 @@ AddEventHandler('qb-jewellery:client:SetThermiteSecurityStatus', function(stateT
 end)
 
 -- Disabling The Cameras
-RegisterNetEvent('qb-jewellery:client:SetCameraStatus')
-AddEventHandler('qb-jewellery:client:SetCameraStatus', function(stateType, state)
+RegisterNetEvent('qb-jewellery:client:SetCameraStatus', function(stateType, state)
     if stateType == "isBusy" then
         Config.JewelLocation["DisableCameras"].isBusy = state
         print("CAMERAS ARE BUSY")
@@ -489,8 +480,7 @@ end
 
 ------ / Event for police to reboot alarm system! This will lock the doors after 30 seconds
 
-RegisterNetEvent('nc-vangelico:client:rebootsystem')
-AddEventHandler('nc-vangelico:client:rebootsystem', function()
+RegisterNetEvent('nc-vangelico:client:rebootsystem', function()
     if Config.Locales == true then
         QBCore.Functions.Notify(Lang:t("error.reboot_timer"), "error", 3500)
     else

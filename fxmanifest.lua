@@ -3,7 +3,7 @@ game 'gta5'
 
 author "Prime Scripts | SocialPeely#4095"
 description 'Vangelico Heist for QBCore'
-version '1.0.0'
+version '1.5.0'
 
 lua54 'yes'
 
